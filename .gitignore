@@ -1,0 +1,19 @@
+# Archivos generados por el sistema operativo
+.DS_Store
+Thumbs.db
+
+# Carpeta node_modules generada por npm
+node_modules/
+
+# Archivo de registro de errores
+error.log
+
+# Archivos de configuración de entorno
+.env
+
+# Archivos de compilación
+dist/
+
+# Archivos de dependencia de gestores de paquetes
+package-lock.json
+yarn.lock
