@@ -30,3 +30,10 @@ app.get("/user/:userId", (req , res) =>{
     res.setHeader("Content-Type" , "Application/json");
     res.send({userId});
 })
+//busco por query localhost:8080/user?mane=Vicente
+ app.get("/user", (req , res)=>{
+    const name =req.query.name;
+    res.setHeader("Content-Type","Application/json");
+    res.send({name})
+ }
+ );
