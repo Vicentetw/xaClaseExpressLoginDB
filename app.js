@@ -3,43 +3,46 @@
 const express = require('express');
 const PORT = 8080;
 const bodyParser = require("body-parser")
+//Midware para evitar poner header en cada peticion GET
+const myMdw = (req, res, next) => {
+    res.setHeader("Content-type", "Applitacion/json");
+    console.log(`se hizo un request al usuario: (${req.url})`);
+    next();
+};
 
 const app = express();
-app.use(bodyParser.json());
+    app.use(bodyParser.json());
+    app.use(myMdw);
 
-
-app.listen(PORT, () =>{
-    console.log( `hola vicente estoy escuchando en puerto: ${PORT}`);
+app.listen(PORT, () => {
+    console.log(`hola vicente estoy escuchando en puerto: ${PORT}`);
 });
 
-app.post("/user",(req, res)=>{
-    //1) const body = req.body;
-    const {name , email , password} = req.body;
-    res.setHeader("Content-Type", "Application/json");
-   //1)  res.send({body});
-   res.send ({name, email, password: "****"});
-   //2)  res.send(`Los datos que enviaste son:${name}, ${email}`)
+app.post("/user", (req, res) => {
+
+    const { name, email, password } = req.body;
+    res.send({ name, email, password: "****" });
+
 });
 
-app.get("/user/:userId", (req , res) =>{
+app.get("/user/:userId", (req, res) => {
     const userId = req.params.userId;
-    res.setHeader("Content-Type" , "Application/json");
-    res.send({userId});
+    res.send({ userId });
 })
-//busco por query localhost:8080/user?mane=Vicente
- app.get("/user", (req , res)=>{
-    const name =req.query.name;
-    res.setHeader("Content-Type","Application/json");
-    res.send({name})
- }
- );
- app.put("/user/:userId", (req, res)=>{
-const userId = req.params.userId;
-const {name, email,password} = req.body;
-res.send({id: userId, name, email, password: "****"});
- });
 
- app.delete("/user/:userId", (req, res)=>{
-const userId = req.params.userId;
-res.send(`Adios usuario ${userId}`);
- });
+app.get("/user", (req, res) => {
+    const name = req.query.name;
+    res.send({ name })
+});
+
+// cómo ponder midware en una peticion app.put("/user/:userId", myMdw,(req, res) => {
+app.put("/user/:userId", (req, res) => {
+    const userId = req.params.userId;
+    const { name, email, password } = req.body;
+    res.send({ id: userId, name, email, password: "****" });
+});
+
+app.delete("/user/:userId", (req, res) => {
+    const userId = req.params.userId;
+    res.send(`Adios usuario ${userId}`);
+});
