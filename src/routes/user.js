@@ -15,8 +15,8 @@ router.get("/:userId", (req, res) => {
 })
 
 router.get("/", (req, res) => {
-    const name = req.query.name;
-    res.send({ name })
+       const { name , email} = req.query;
+    res.send({ name, email});
 });
 
 // cómo poner midware en una peticion route.put("/user/:userId", myMdw,(req, res) => {
