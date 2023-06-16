@@ -7,8 +7,13 @@ let payload = { name: "John", email: "john@santex.com"};
 
 // Método PUT
 // const response = await axios.put("http://localhost:8080/user/1234",payload)
-const response = await axios.delete("http://localhost:8080/user/1234",payload)
-console.log("Datos del server: ", response.data);
+try{
+    const response = await axios.delete("http://localhost:8080/user/1234",payload)
+    console.log("Datos del server: ", response.data);
+}catch(error){
+    console.error("Se produjo un error al realizar  la solicitud:", error.message);
+}
+
 };
 
 makeRequest();
