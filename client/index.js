@@ -3,7 +3,7 @@ const axios = require("axios");
 const { config } = require("process");
 const url = require("url");
 
-// Agregar el interceptor antes de hacer la solicitud
+// Agregar el interceptor al request antes de hacer la solicitud
 axios.interceptors.request.use(
     (config) => {
         console.log("Antes de enviar el request", config);
@@ -12,6 +12,23 @@ axios.interceptors.request.use(
         (error) => {
             return Promise.reject(error);
         });
+
+//Agredo interceptor al response
+// Agregar el interceptor para manejar las respuestas
+axios.interceptors.response.use(
+    (response) => {
+      console.log("Respuesta recibida", response.data);
+      return response;
+    },
+    (error) => {
+      if (error.response) {
+        console.error("Error en la respuesta del servidor:", error.response.data);
+      } else {
+        console.error("Se produjo un error al realizar la solicitud:", error.message);
+      }
+      return Promise.reject(error);
+    }
+  );
 
 async function makeRequest() {
     let payload = { name: "John", email: "john@santex.com" };
