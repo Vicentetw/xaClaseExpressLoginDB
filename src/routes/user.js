@@ -2,10 +2,19 @@ const express = require("express");
 
 const router = express.Router();
 //reemplazo route. router.
-router.post("/", (req, res) => {
+router.post("/",async (req, res) => {
 
-    const { name, email, password } = req.body;
-    res.send({ name, email, password: "****" });
+    const { nombre, apellido, email, password } = req.body;
+    try{
+        const newUser = await userService.createUser({
+            nombre,
+            apellido,
+            email,
+            password,
+        });
+        res.status(201).json(newUser);
+    }
+    res.send(express.response);
 
 });
 
