@@ -13,6 +13,8 @@ router.post("/",async (req, res) => {
             password,
         });
         res.status(201).json(newUser);
+    } catch (error) {
+        res.status(500).json({message: error.message});
     }
     res.send(express.response);
 
