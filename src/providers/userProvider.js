@@ -8,3 +8,7 @@ const createUser = async (userOptions) => {
         throw error;
     }
 };
+
+module.exports = {
+    createUser, 
+};

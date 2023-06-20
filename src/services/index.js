@@ -1,8 +1,5 @@
-const { getUser, createUser, updateUser, deleteUser } = require('./user');
+const userService = require('./user');
 
 module.exports = {
-    getUser,
-    createUser,
-    updateUser,
-    deleteUser,
+    userService
 };
