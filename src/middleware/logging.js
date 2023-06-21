@@ -1,6 +1,6 @@
 const loggingMdw = (req, res, next) => {
-    res.setHeader("Content-type", "Applitacion/json");
-    console.log(`se hizo un request a la url: (${req.url})`);
+    res.setHeader("Content-type", "Application/json");
+    console.log(`se hizo un request a la url de login: (${req.url})`);
     next();
 };
 module.exports = loggingMdw; //exporto la función 
