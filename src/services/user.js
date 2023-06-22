@@ -1,10 +1,24 @@
+const { User } = require("../models");
+const userProvider = require("../providers/userProvider");
+
 const getUser = (id)=> {
     return {id, name:"John"};
 };
 
-const createUser = (user) =>{
-    //llamada al provider con el objeto user
-    return { ...user, id: Math.random()*100};
+const getAll = async()=> {
+  try{
+    const users = await User.findAll();//Consulta totdos los usuario
+    return users;
+  }catch(error){
+    console.error('Error al obtener los usuario', error);
+    throw error;
+  }
+   
+};
+
+const createUser = async(user) =>{
+    
+  return await userProvider.createUser(user);
 };
 
 const updateUser = (id, user)=>{
@@ -17,4 +31,17 @@ const updateUser = (id, user)=>{
     return `Adios usuario ${id}`;
  };
  const queryUser = (name) =>{};
- mudule.exports = {getUser, createUser, updateUser, deleteUser};
+ 
+ /**module.exports = {
+    getUser,
+    createUser,
+    updateUser,
+    deleteUser,
+    queryUser
+  };*/
+  module.exports.getUser = getUser;
+module.exports.createUser = createUser;
+module.exports.updateUser = updateUser;
+module.exports.deleteUser = deleteUser;
+module.exports.queryUser = queryUser;
+module.exports.getAll = getAll;

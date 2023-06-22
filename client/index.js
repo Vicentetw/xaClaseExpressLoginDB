@@ -6,7 +6,7 @@ const url = require("url");
 // Agregar el interceptor al request antes de hacer la solicitud
 axios.interceptors.request.use(
     (config) => {
-        console.log("Antes de enviar el request", config);
+        console.log("Antes de enviar el request", config.url);
         return config;
     },
         (error) => {

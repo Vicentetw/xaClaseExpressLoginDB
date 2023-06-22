@@ -1,7 +1,19 @@
-const {Sequalize} = require ('sequalize');
+const { Sequelize } = require('sequelize');
 
-const sequalize = new Sequalize({
-    dialect: "sqlite",
-    Storage: ".database.sqlite",
+const sequelize = new Sequelize({
+  dialect: 'sqlite',
+  storage: './database.sqlite',
 });
-module.exports = sequalize; 
+
+const initializeDB = async () => {
+  try {
+    await sequelize.authenticate();
+    console.log('Conexión a la base de datos establecida correctamente');
+    const { User } = require('../models/users');
+    await User.sync({ force: false });
+  } catch (error) {
+    console.error('Error al inicializar la base de datos:', error);
+  }
+};
+
+module.exports = { sequelize, initializeDB };
