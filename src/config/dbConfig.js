@@ -3,6 +3,7 @@ const { Sequelize } = require('sequelize');
 const sequelize = new Sequelize({
   dialect: 'sqlite',
   storage: './database.sqlite',
+  charset: 'utf8mb4', // Establece la codificación de caracteres
 });
 
 const initializeDB = async () => {

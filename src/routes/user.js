@@ -1,8 +1,10 @@
 const express = require("express");
 const {userService} = require("../services");
+//const { userController } = require('../controllers');
+const userController = require('../controllers/userController');
 
-//const router = express.Router();
-const router = require("express").Router(); //des esta forma sólo importo la funcion Router y no todo el módulo express
+const router = express.Router();
+//const router = require("express").Router(); //des esta forma sólo importo la funcion Router y no todo el módulo express
 
 // Ruta para el login
 router.post("/login", async (req, res) => {
@@ -28,9 +30,9 @@ router.post("/login", async (req, res) => {
   });
   
 
-
-
-router.post("/",async (req, res) => {
+  router.post("/", userController.createUser);
+//paso el manejo al controlador con la sentencia de arriba
+/* router.post("/",async (req, res) => {
 
     const { nombre, apellido, email, password } = req.body;
 
@@ -52,7 +54,7 @@ router.post("/",async (req, res) => {
     }
 });
 
-
+*/
 
 router.get("/", (req, res) => {
        const { name , email} = req.query;
@@ -81,9 +83,19 @@ router.put("/:userId", (req, res) => {
     res.send({ id: userId, name, email, password: "****" });
 });
 
-router.delete("/:userId", (req, res) => {
-    const userId = req.params.userId;
-    res.send(`Adios usuario ${userId}`);
+router.delete("/:userId", async (req, res) => {
+  const userId = req.params.userId;
+
+  try {
+    // Eliminar el usuario de la base de datos
+    await userService.deleteUser(userId);
+
+    // Enviar mensaje de éxito
+    res.status(200).json({ message: "Usuario eliminado con éxito" });
+  } catch (error) {
+    // Manejar el error en caso de fallo al eliminar
+    res.status(500).json({ message: "Error al eliminar el usuario" });
+  }
 });
 
 module.exports = router;

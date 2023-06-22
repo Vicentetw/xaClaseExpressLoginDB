@@ -26,22 +26,22 @@ const updateUser = (id, user)=>{
     return user;
 
 }
- const deleteUser = (id)=>{
-    //llamada al provider con el id
-    return `Adios usuario ${id}`;
- };
+const deleteUser = async (id) => {
+  try {
+    // Llamar a la función deleteUser del proveedor
+    await userProvider.deleteUser(id);
+    return `Adiós usuario ${id}, se ha eliminado correctamente`;
+  } catch (error) {
+    throw error;
+  }
+};
  const queryUser = (name) =>{};
  
- /**module.exports = {
-    getUser,
-    createUser,
-    updateUser,
-    deleteUser,
-    queryUser
-  };*/
-  module.exports.getUser = getUser;
-module.exports.createUser = createUser;
-module.exports.updateUser = updateUser;
-module.exports.deleteUser = deleteUser;
-module.exports.queryUser = queryUser;
-module.exports.getAll = getAll;
+ module.exports = {
+  getUser,
+  createUser,
+  updateUser,
+  deleteUser,
+  queryUser,
+  getAll,
+};

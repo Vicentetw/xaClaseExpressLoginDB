@@ -12,6 +12,7 @@ const app = express();
 app.use(bodyParser.json());
 app.use(logging);
 app.use('/user', userRouter);
+//app.use(userRouter);
 
 // Ruta para manejar la solicitud POST a /user
 userRouter.post('/', async (req, res) => {
