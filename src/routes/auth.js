@@ -17,7 +17,6 @@ router.post("/", async (req, res) => {
         res.json({ token });
       } else {
         const dbUser = await userProvider.validateUser(user, password);
-        console.log("DB User", dbUser);
         if (dbUser) {
           const token = jwt.sign({ user: dbUser.email }, secret);
           res.json({ token });

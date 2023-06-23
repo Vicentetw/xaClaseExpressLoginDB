@@ -16,5 +16,7 @@ passport.use(new JWTStrategy({
     return done(null, false, { message: "El usuario no es válido" });
   }
 }));
- 
-module.exports = {secret};
+
+const authMiddleware = passport.authenticate("jwt", {session: false});
+
+module.exports = {secret , authMiddleware};
