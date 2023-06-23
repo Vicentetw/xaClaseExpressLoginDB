@@ -2,10 +2,8 @@ const userService = require('../services');
 
 const createUser = async (req, res) => {
   try {
-    
     // Lógica para crear un usuario
     const { nombre, apellido, email, password } = req.body;
-    console.log('Llamando al controller');
 
     // Validación de datos
     if (!nombre || !apellido || !email || !password) {
@@ -25,6 +23,15 @@ const createUser = async (req, res) => {
   }
 };
 
+const getAll = async (req, res) => {
+  try {
+    const users = await userService.getAll(); // Obtener todos los usuarios desde el servicio
+    res.status(200).json(users); // Enviar la lista de usuarios como respuesta
+  } catch (error) {
+    res.status(500).json({ message: 'Error al obtener los usuarios' });
+  }
+};
+
 const deleteUser = async (req, res) => {
   try {
     const userId = req.params.userId;
@@ -40,5 +47,6 @@ const deleteUser = async (req, res) => {
 
 module.exports = {
   createUser,
+  getAll,
   deleteUser,
 };

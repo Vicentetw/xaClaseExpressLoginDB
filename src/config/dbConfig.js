@@ -1,19 +1,18 @@
-const { Sequelize } = require('sequelize');
+const { Sequelize } = require("sequelize");
 
 const sequelize = new Sequelize({
-  dialect: 'sqlite',
-  storage: './database.sqlite',
-  charset: 'utf8mb4', // Establece la codificación de caracteres
+  dialect: "sqlite",
+  storage: "./database.sqlite",
 });
 
 const initializeDB = async () => {
   try {
     await sequelize.authenticate();
-    console.log('Conexión a la base de datos establecida correctamente');
-    const { User } = require('../models/users');
-    await User.sync({ force: false });
+    await sequelize.query("SELECT 2+2  as result;");
+    console.log("Conexión a la base de datos establecida");
+    await sequelize.sync({ force: false });
   } catch (error) {
-    console.error('Error al inicializar la base de datos:', error);
+    console.error("Hubo un error al inicializar la base de datos", error);
   }
 };
 

@@ -18,6 +18,14 @@ const deleteUser = async (userId) => {
   }
 };
 
+const getAll = async () => {
+  try {
+    const users = await User.findAll();
+    return users;
+  } catch (error) {
+    throw error;
+  }
+};
 
 const validateUser = async (email, password) => {
   try {
@@ -33,8 +41,8 @@ const validateUser = async (email, password) => {
     } else {
       return false;
     }
-  } catch (err) {
-    console.error("Error when validating User", err);
+  } catch (error) {
+    console.error("Error when validating User", error);
     return false;
   }
 };
@@ -42,5 +50,6 @@ const validateUser = async (email, password) => {
 module.exports = {
   createUser,
   deleteUser,
+  getAll,
   validateUser,
 };

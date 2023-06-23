@@ -5,6 +5,8 @@ const { userRouter, authRouter } = require('./routes');
 const { initializeDB } = require('./config/dbConfig');
 const { userService } = require('./services');
 const {authMiddleware} = require('./middleware/authentication');
+const Libro = require('./models/libro');
+const Libreria = require('./models/libreria');
 //const passport = require('passport');
 
 const PORT = 8080;

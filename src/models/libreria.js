@@ -1,27 +1,22 @@
 const { DataTypes } = require("sequelize");
 const { sequelize } = require("../config/dbConfig");
-const Libreria = require("./libreria");
+const Libro = require("./libro");
 
-const Libro = sequelize.define("Libros", {
+const Libreria = sequelize.define("Librerias", {
     id: {
         type: DataTypes.INTEGER,
         primaryKey: true,
         autoIncrement: true,
     },
-    isbn: {
-        type: DataTypes.INTEGER,
-        allowNull: false,
-        unique: true,
-    },
-    titulo: {
+    name: {
         type: DataTypes.STRING,
         allowNull: false,
     },
-    autor: {
+    location: {
         type: DataTypes.STRING,
         allowNull: false,
     },
-    year: {
+    telefono: {
         type: DataTypes.STRING,
         allowNull: false,
     },
@@ -31,5 +26,8 @@ const Libro = sequelize.define("Libros", {
         defaultValue: false,
     },
 });
-//Libro.belongsTo(Libreria);
-module.exports = Libro;
+
+Libreria.hasMany(Libro);
+Libro.belongsTo(Libreria);
+
+module.exports = Libreria;
