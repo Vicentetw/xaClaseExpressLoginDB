@@ -18,7 +18,29 @@ const deleteUser = async (userId) => {
   }
 };
 
+
+const validateUser = async (email, password) => {
+  try {
+    const user = await User.findAll({
+      where: {
+        email: email,
+        password: password,
+      },
+    });
+
+    if (user.length !== 0) {
+      return user;
+    } else {
+      return false;
+    }
+  } catch (err) {
+    console.error("Error when validating User", err);
+    return false;
+  }
+};
+
 module.exports = {
   createUser,
   deleteUser,
+  validateUser,
 };

@@ -1,9 +1,10 @@
 const express = require('express');
 const bodyParser = require('body-parser');
 const { logging } = require('./middleware');
-const { userRouter } = require('./routes');
+const { userRouter, authRouter } = require('./routes');
 const { initializeDB } = require('./config/dbConfig');
 const { userService } = require('./services');
+const authentication = require('./middleware/authentication')
 
 const PORT = 8080;
 
@@ -13,7 +14,7 @@ app.use(bodyParser.json());
 app.use(logging);
 app.use('/user', userRouter);
 //app.use(userRouter);
-
+app.use('/login', authRouter);
 // Ruta para manejar la solicitud POST a /user
 userRouter.post('/', async (req, res) => {
   try {

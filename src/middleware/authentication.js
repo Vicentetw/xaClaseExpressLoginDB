@@ -1,4 +1,4 @@
-const { verifyToken } = require('../providers/authProvider');
+//const { verifyToken } = require('../providers/authProvider');
 const passport = require('passport');
 const passportJwt = require('passport-jwt');
 const JWTStrategy = passportJwt.Strategy;
@@ -9,7 +9,7 @@ passport.use(new JWTStrategy({
   jwtFromRequest: ExtractJWT.fromAuthHeaderAsBearerToken(),
   secretOrKey: secret,
 }, (jwtPayload, done) => {
-  if (jwtPayload.user === 'admin' && jwtPayload.password === 'admin') {
+  if (jwtPayload.user === 'admin') {
     const usuario = jwtPayload;  
     return done(null, usuario);
   } else {
@@ -17,3 +17,4 @@ passport.use(new JWTStrategy({
   }
 }));
  
+module.exports = {secret};
