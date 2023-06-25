@@ -1,8 +1,19 @@
 const express = require('express');
 const userRouter = require('./user');
-const authRouter = require('./auth')
-const router = express.Router();
-// Rutas
-router.use('/user', userRouter);
+const libraryRouter = require('./library');
+const bookRouter = require('./book');
+const authRouter = require('./auth');
 
-module.exports = {userRouter, authRouter };
+const router = express.Router();
+
+router.use('/user', userRouter);
+router.use('/library', libraryRouter);
+router.use('/book', bookRouter);
+
+module.exports = {
+  userRouter,
+  libraryRouter,
+  bookRouter,
+  authRouter,
+  router
+};

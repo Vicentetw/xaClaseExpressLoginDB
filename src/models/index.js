@@ -1,9 +1,9 @@
-const Libreria = require('./libreria');
-const Libro = require('./libro');
+const Library = require('./library');
+const Book = require('./book');
 const User = require('./users');
 
 module.exports = {
-  Libreria,
-  Libro,
+  Library,
+  Book,
   User,
 };

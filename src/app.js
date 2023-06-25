@@ -1,12 +1,13 @@
 const express = require('express');
 const bodyParser = require('body-parser');
 const { logging } = require('./middleware');
-const { userRouter, authRouter } = require('./routes');
+const { userRouter, authRouter, libraryRouter, bookRouter } = require('./routes');
 const { initializeDB } = require('./config/dbConfig');
 const { userService } = require('./services');
 const {authMiddleware} = require('./middleware/authentication');
-const Libro = require('./models/libro');
-const Libreria = require('./models/libreria');
+const Book = require('./models/book');
+const Library = require('./models/library');
+const { libraryController } = require('./controllers');
 //const passport = require('passport');
 
 const PORT = 8080;
@@ -16,7 +17,8 @@ const app = express();
 app.use(bodyParser.json());
 app.use(logging);
 app.use('/user', authMiddleware, userRouter);
-//app.use(userRouter);
+app.use('/library', authMiddleware, libraryRouter);
+app.use('/book', authMiddleware, bookRouter);
 app.use('/login',  authRouter);
 // Ruta para manejar la solicitud POST a /user
 userRouter.post('/', async (req, res) => {

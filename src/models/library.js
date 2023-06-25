@@ -1,8 +1,8 @@
 const { DataTypes } = require("sequelize");
 const { sequelize } = require("../config/dbConfig");
-const Libro = require("./libro");
+const Book = require("./book");
 
-const Libreria = sequelize.define("Librerias", {
+const Library = sequelize.define("Library", {
     id: {
         type: DataTypes.INTEGER,
         primaryKey: true,
@@ -27,7 +27,7 @@ const Libreria = sequelize.define("Librerias", {
     },
 });
 
-Libreria.hasMany(Libro);
-Libro.belongsTo(Libreria);
+Library.hasMany(Book);
+Book.belongsTo(Library);
 
-module.exports = Libreria;
+module.exports = Library;

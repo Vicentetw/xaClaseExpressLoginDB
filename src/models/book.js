@@ -1,8 +1,8 @@
 const { DataTypes } = require("sequelize");
 const { sequelize } = require("../config/dbConfig");
-const Libreria = require("./libreria");
+const Library = require("./library");
 
-const Libro = sequelize.define("Libros", {
+const Book = sequelize.define("Book", {
     id: {
         type: DataTypes.INTEGER,
         primaryKey: true,
@@ -31,5 +31,5 @@ const Libro = sequelize.define("Libros", {
         defaultValue: false,
     },
 });
-//Libro.belongsTo(Libreria);
-module.exports = Libro;
+//Book.belongsTo(Library);
+module.exports = Book;
