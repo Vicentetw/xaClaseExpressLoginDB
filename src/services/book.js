@@ -8,7 +8,7 @@ const createBook = async (book) => {
 
 const getBook = async (bookId) => {
   try {
-    const book = await Book.findByPk(bookId, {
+    const book = await bookProvider.getBook(bookId, {
       include: Book,
     });
 
@@ -22,6 +22,7 @@ const getBook = async (bookId) => {
     throw error;
   }
 };
+
 
 /*const createBook = async (bookData) => {
     try {

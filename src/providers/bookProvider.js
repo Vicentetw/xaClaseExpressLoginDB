@@ -54,7 +54,17 @@ const getAllBooks = async () => {
     throw error;
   }
 };
-
+const getBook = async (bookId) => {
+    try {
+      const book = await Book.findByPk(bookId, { include: { all: true } });
+      return book;
+    } catch (err) {
+      console.error("Error when fetching Book", err);
+      throw err;
+    }
+  };
+  
+  
 /*const updateBook = async (bookId, bookData) => {
   try {
     const updatedBook = await Book.update(bookData, { where: { id: bookId } });
@@ -79,5 +89,6 @@ module.exports = {
   createBook,
   deleteBook,
   getAllBooks,
+  getBook,
   updateBook,
 };

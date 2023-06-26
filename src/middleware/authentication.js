@@ -18,5 +18,20 @@ passport.use(new JWTStrategy({
 }));
 
 const authMiddleware = passport.authenticate("jwt", {session: false});
+const userIsAdminMDW = (req, res, next) => {
+  return passport.authenticate("jwt", { session: false }, (err, user, info) => {
+    if (err) {
+      console.err(err);
+      return next(err);
+    }
 
-module.exports = {secret , authMiddleware};
+    if (user.role === "Admin") {
+      req.user = user;
+      return next();
+    }
+
+    res.status(401).json({ error: "User not Admin" });
+  })(req, res, next);
+};
+
+module.exports = {secret , authMiddleware, userIsAdminMDW,};

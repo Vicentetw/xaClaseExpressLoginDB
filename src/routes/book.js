@@ -8,10 +8,8 @@ const router = express.Router();
 router.get('/all', authMiddleware, bookController.getAllBooks);
 
 // Obtener un libro en particular
-router.get('/:id', (req, res) => {
-  const bookId = req.params.id;
-  // Lógica para obtener un libro por su ID
-});
+// Obtener una librería
+router.get("/:bookId", bookController.getBookById);
 
 // Crear un libro
 router.post("/", bookController.createBook);
@@ -22,10 +20,8 @@ router.put('/:id', (req, res) => {
 });
 
 // Eliminar un libro
-router.delete('/:id', (req, res) => {
-  const bookId = req.params.id;
+router.delete('/:bookId', bookController.deleteBook);
   // Lógica para eliminar un libro por su ID (borrado lógico)
-});
-// Middleware para capturar errores 404
+
 
 module.exports = router;

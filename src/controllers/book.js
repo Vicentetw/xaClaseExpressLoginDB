@@ -10,18 +10,19 @@ const getAllBooks = async (req, res) => {
 };
 
 const getBookById = async (req, res) => {
-  const bookId = req.params.id;
-  try {
-    const book = await bookService.findOne({ _id: bookId, deleted: false });
-    if (book) {
-      res.json(book);
-    } else {
-      res.status(404).json({ message: 'Libro no encontrado' });
+    try {
+    const book = await bookService.getBook( req.params.bookId);
+    if (!book) {
+        res.status(404).json({ action: "getBook", error: "Book Not Found" });
+      } else {
+        res.json(book);
+      }
+    } catch (err) {
+      res.status(500).json({ action: "getBook", error: err.message });
     }
-  } catch (error) {
-    res.status(500).json({ message: error.message });
-  }
-};
+  };
+      
+  
 
 const createBook = async (req, res) => {
   try {
