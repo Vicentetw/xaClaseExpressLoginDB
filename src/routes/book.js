@@ -1,11 +1,11 @@
 const express = require('express');
 const { bookController } = require('../controllers');
+const { authMiddleware } = require("../middleware/authentication");
 const router = express.Router();
 
 // Obtener todos los libros
-router.get('/', (req, res) => {
-  // Lógica para obtener todos los libros
-});
+
+router.get('/all', authMiddleware, bookController.getAllBooks);
 
 // Obtener un libro en particular
 router.get('/:id', (req, res) => {
@@ -26,5 +26,6 @@ router.delete('/:id', (req, res) => {
   const bookId = req.params.id;
   // Lógica para eliminar un libro por su ID (borrado lógico)
 });
+// Middleware para capturar errores 404
 
 module.exports = router;

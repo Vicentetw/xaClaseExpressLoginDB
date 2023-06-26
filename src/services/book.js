@@ -34,17 +34,29 @@ const getBook = async (bookId) => {
   };
   */
 
-const getAllBooks = async () => {
+/*const getAllBooks = async () => {
   try {
-    const books = await bookProvider.getAllBooks({
-      include: Book,
-    });
+    const books = await bookProvider.getAllBooks(){
+    //  include: Book,
+   // });
 
     return books;
   } catch (error) {
     throw error;
   }
 };
+*/
+const getAllBooks = async () => {
+    try {
+      const books = await bookProvider.getAllBooks({
+        include: Book, // Incluir las asociaciones relacionadas con el modelo Book
+      });
+      return books;
+    } catch (error) {
+      console.error("Error al obtener los libros en service", error);
+      throw error;
+    }
+  };
 
 const updateBook = async (bookId, book) => {
   try {

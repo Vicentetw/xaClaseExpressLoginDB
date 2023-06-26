@@ -55,7 +55,7 @@ const getAllBooks = async () => {
   }
 };
 
-const updateBook = async (bookId, bookData) => {
+/*const updateBook = async (bookId, bookData) => {
   try {
     const updatedBook = await Book.update(bookData, { where: { id: bookId } });
     return updatedBook;
@@ -63,6 +63,17 @@ const updateBook = async (bookId, bookData) => {
     throw error;
   }
 };
+*/
+const updateBook = async (bookOptions) => {
+    try {
+      const { id, ...rest } = bookOptions;
+      const updatedBook = await Book.update(rest, { where: { id } });
+      return updatedBook;
+    } catch (error) {
+      console.error("Error al actualizar el libro", error);
+      throw error;
+    }
+  };
 
 module.exports = {
   createBook,

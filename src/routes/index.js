@@ -15,5 +15,6 @@ module.exports = {
   libraryRouter,
   bookRouter,
   authRouter,
-  //router
+  router,
 };
+

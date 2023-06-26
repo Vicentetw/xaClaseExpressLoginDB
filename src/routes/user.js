@@ -13,10 +13,7 @@ router.get("/", (req, res) => {
 
 router.get('/all', authMiddleware, userController.getAll);
 
-router.get("/:userId", (req, res) => {
-  const userId = req.params.userId;
-  res.send({ userId });
-});
+router.get("/:userId", userController.getUser);
 
 router.put("/:userId", (req, res) => {
   const userId = req.params.userId;

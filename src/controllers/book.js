@@ -2,10 +2,10 @@ const bookService = require('../services/book')
 
 const getAllBooks = async (req, res) => {
   try {
-    const books = await bookService.find({ deleted: false });
-    res.json(books);
+    const books = await bookService.getAllBooks({ deleted: false });
+    res.status(200).json(books); // Enviar la lista de usuarios como respuesta
   } catch (error) {
-    res.status(500).json({ message: error.message });
+    res.status(500).json({ message: 'Error al obtener los books' });
   }
 };
 
