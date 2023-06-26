@@ -37,6 +37,8 @@ const createBook = async (bookOptions) => {
       throw error;
     }
   };
+/*
+//Cambio a logic delete
 const deleteBook = async (bookId) => {
   try {
     const deletedBook = await Book.destroy({ where: { id: bookId } });
@@ -45,6 +47,22 @@ const deleteBook = async (bookId) => {
     throw error;
   }
 };
+*/
+const deleteBook = async (bookId) => {
+  try {
+    const book = await getBook(bookId);
+    if (!book) {
+      throw new Error("Book not found");
+    }
+    book.deleted = true;
+    await book.save();
+    return book;
+  } catch (err) {
+    console.error("Error when deleting Book", err);
+    throw err;
+  }
+};
+
 
 const getAllBooks = async () => {
   try {

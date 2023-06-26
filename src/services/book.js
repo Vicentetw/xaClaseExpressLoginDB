@@ -82,6 +82,8 @@ const updateBook = async (bookId, bookData) => {
     throw err;
   }
 };
+/*
+//modifico mi delete a logic
 const deleteBook = async (bookId) => {
   try {
     await Book.destroy({ where: { id: bookId } });
@@ -89,7 +91,16 @@ const deleteBook = async (bookId) => {
     throw error;
   }
 };
-
+*/
+const deleteBook = async (bookId) => {
+  try {
+    const deletedBook = await bookProvider.deleteBook(bookId);
+    return deletedBook;
+  } catch (err) {
+    console.error("Error when deleting Book", err);
+    throw err;
+  }
+};
 const addBookToBook = async (bookId, book) => {
   try {
     const book = await Book.findByPk(bookId);

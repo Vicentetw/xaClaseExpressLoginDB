@@ -46,7 +46,7 @@ const updateBook = async (req, res) => {
       res.status(500).json({ action: "updateBook", error: err.message });
     }
   };
-
+/*
 const deleteBook = async (req, res) => {
   const bookId = req.params.id;
 
@@ -65,6 +65,19 @@ const deleteBook = async (req, res) => {
     res.status(500).json({ message: error.message });
   }
 };
+*/
+const deleteBook = async (req, res) => {
+    try {
+      const deletedBook = await bookService.deleteBook(req.params.bookId);
+      res.json({ message: "Book deleted successfully", book: deletedBook });
+    } catch (err) {
+      res.status(500).json({ action: "deleteBook", error: err.message });
+    }
+  };
+  
+
+
+
 
 module.exports = {
   getAllBooks,

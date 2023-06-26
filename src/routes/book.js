@@ -21,8 +21,8 @@ router.post("/", bookController.createBook);
 */
 router.put("/:bookId", bookController.updateBook);
 
-// Eliminar un libro
-router.delete('/:bookId', bookController.deleteBook);
+// Eliminar un libro (borrado lógico)
+router.delete('/:bookId', authMiddleware, bookController.deleteBook);
   // Lógica para eliminar un libro por su ID (borrado lógico)
 
 
