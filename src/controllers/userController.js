@@ -41,10 +41,36 @@ const deleteUser = async (req, res) => {
     res.status(500).json({ message: 'Error al eliminar el usuario' });
   }
 };
+/*const updateUser = async (req, res) => {
+  try {
+    const updateUser = await userService.updateUser(req.body);
+    res.json(updateUser);
+  } catch (err) {
+    res.status(400).json({ action: "putUser", error: err.message });
+  }
+};
+*/
+const updateUser = async (req, res) => {
+  try {
+    const { userId } = req.params;
+    const updatedUser = req.body;
+
+    const result = await userService.updateUser(userId, updatedUser);
+
+    if (result === 0) {
+      res.status(404).json({ action: 'updateUser', message: 'No se encontró el usuario.' });
+    } else {
+      res.json({ message: 'Usuario actualizado correctamente.' });
+    }
+  } catch (error) {
+    res.status(400).json({ action: 'updateUser', error: error.message });
+  }
+};
 
 module.exports = {
   createUser,
   getAll,
   getUser,
   deleteUser,
+  updateUser,
 };

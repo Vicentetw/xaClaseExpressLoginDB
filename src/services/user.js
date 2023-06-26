@@ -29,9 +29,18 @@ const createUser = async (user) => {
   
 };
 
-const updateUser = (id, user) => {
+/*const updateUser = (id, user) => {
   // Llamada al proveedor con el objeto user
   return user;
+};
+*/
+const updateUser = async (userId, updatedUser) => {
+  try {
+    const result = await userProvider.updateUser(userId, updatedUser);
+    return result;
+  } catch (error) {
+    throw error;
+  }
 };
 
 const deleteUser = async (id) => {

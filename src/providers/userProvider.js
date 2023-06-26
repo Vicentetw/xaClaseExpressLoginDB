@@ -38,7 +38,19 @@ const getUser = async (userId) => {
     throw err;
   }
 };
-
+const updateUser = async (userId, updatedUser) => {
+  try {
+    const result = await User.update(updatedUser, { where: { id: userId } });
+    if (result[0] === 0) {
+      // No se encontró ningún usuario con el ID proporcionado
+      throw new Error("No se encontró el usuario.");
+    }
+    return result[0]; // Devuelve el número de filas actualizadas (debería ser 1)
+  } catch (error) {
+    console.error("Error al actualizar el usuario", error);
+    throw error;
+  }
+};
 
 const validateUser = async (email, password) => {
   try {
@@ -65,5 +77,6 @@ module.exports = {
   deleteUser,
   getAll,
   getUser,
+  updateUser,
   validateUser,
 };

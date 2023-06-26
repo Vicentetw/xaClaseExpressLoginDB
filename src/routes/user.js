@@ -15,11 +15,13 @@ router.get('/all', authMiddleware, userController.getAll);
 
 router.get("/:userId", userController.getUser);
 
-router.put("/:userId", (req, res) => {
+router.put("/:userId", userController.updateUser);
+
+/*router.put("/:userId", (req, res) => {
   const userId = req.params.userId;
-  const { name, email, password } = req.body;
-  res.send({ id: userId, name, email, password: "****" });
-});
+  const { nombre, apellido,email, password } = req.body;
+  res.send({ id: userId, nombre, apellido, email, password});
+});*/
 
 router.delete("/:userId", userController.deleteUser);
 

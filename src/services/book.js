@@ -18,7 +18,7 @@ const getBook = async (bookId) => {
 
     return book;
   } catch (error) {
-    console.error("Error al obtener loslibros", error);
+    console.error("Error al obtener los libros", error);
     throw error;
   }
 };
