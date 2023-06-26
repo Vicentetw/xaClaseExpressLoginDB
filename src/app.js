@@ -12,8 +12,8 @@ const app = express();
 app.use(bodyParser.json());
 app.use(logging);
 app.use('/user', authMiddleware, userRouter);
-app.use('/library', authMiddleware, libraryRouter);
-app.use('/book', authMiddleware, bookRouter);
+app.use('/library', libraryRouter);
+app.use('/book',  bookRouter);
 app.use('/login',  authRouter);
 
 (async () => {

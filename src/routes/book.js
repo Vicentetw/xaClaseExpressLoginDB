@@ -5,7 +5,7 @@ const router = express.Router();
 
 // Obtener todos los libros
 
-router.get('/all', authMiddleware, bookController.getAllBooks);
+router.get('/all', bookController.getAllBooks);
 
 // Obtener un libro en particular
 // Obtener una librería
@@ -19,7 +19,7 @@ router.post("/", bookController.createBook);
   // Lógica para modificar un libro por su ID
 });
 */
-router.put("/:bookId", bookController.updateBook);
+router.put("/:bookId", authMiddleware, bookController.updateBook);
 
 // Eliminar un libro (borrado lógico)
 router.delete('/:bookId', authMiddleware, bookController.deleteBook);
