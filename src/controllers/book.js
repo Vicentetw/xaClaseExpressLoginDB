@@ -35,27 +35,17 @@ const createBook = async (req, res) => {
 
 
 const updateBook = async (req, res) => {
-  const bookId = req.params.id;
-
-  try {
-    const existingBook = await bookService.getBook({ _id: bookId, deleted: false });
-    if (!existingBook) {
-      return res.status(404).json({ message: 'Libro no encontrado' });
+    try {
+      const updatedBook = await bookService.updateBook(
+        req.params.bookId,
+        req.body
+      );
+      res.json({ message: "Book updated successfully", book: updatedBook });
+    } catch (err) {
+      console.error("Error when updating book", err);
+      res.status(500).json({ action: "updateBook", error: err.message });
     }
-
-    existingBook.isbn = req.body.isbn || existingBook.isbn;
-    existingBook.titulo = req.body.titulo || existingBook.titulo;
-    existingBook.autor = req.body.autor || existingBook.autor;
-    existingBook.year = req.body.year || existingBook.year;
-    existingBook.library = req.body.library || existingBook.library;
-
-    const updatedBook = await existingBook.save();
-
-    res.json(updatedBook);
-  } catch (error) {
-    res.status(500).json({ message: error.message });
-  }
-};
+  };
 
 const deleteBook = async (req, res) => {
   const bookId = req.params.id;

@@ -14,10 +14,12 @@ router.get("/:bookId", bookController.getBookById);
 // Crear un libro
 router.post("/", bookController.createBook);
 // Modificar un libro
-router.put('/:id', (req, res) => {
+/*router.put('/:id', (req, res) => {
   const bookId = req.params.id;
   // Lógica para modificar un libro por su ID
 });
+*/
+router.put("/:bookId", bookController.updateBook);
 
 // Eliminar un libro
 router.delete('/:bookId', bookController.deleteBook);

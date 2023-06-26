@@ -59,7 +59,7 @@ const getAllBooks = async () => {
     }
   };
 
-const updateBook = async (bookId, book) => {
+/*const updateBook = async (bookId, book) => {
   try {
     await Book.update(book, {
       where: { id: bookId },
@@ -72,7 +72,16 @@ const updateBook = async (bookId, book) => {
     throw error;
   }
 };
-
+*/
+const updateBook = async (bookId, bookData) => {
+  try {
+    const updatedBook = await bookProvider.updateBook(bookId, bookData);
+    return updatedBook;
+  } catch (err) {
+    console.error("Error in book service - updateBook", err);
+    throw err;
+  }
+};
 const deleteBook = async (bookId) => {
   try {
     await Book.destroy({ where: { id: bookId } });

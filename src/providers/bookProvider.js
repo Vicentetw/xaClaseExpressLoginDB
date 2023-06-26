@@ -55,15 +55,14 @@ const getAllBooks = async () => {
   }
 };
 const getBook = async (bookId) => {
-    try {
-      const book = await Book.findByPk(bookId, { include: { all: true } });
-      return book;
-    } catch (err) {
-      console.error("Error when fetching Book", err);
-      throw err;
-    }
-  };
-  
+  try {
+    const book = await Book.findByPk(bookId, { include: { all: true } });
+    return book;
+  } catch (err) {
+    console.error("Error when fetching Book", err);
+    throw err;
+  }
+};
   
 /*const updateBook = async (bookId, bookData) => {
   try {
@@ -74,7 +73,7 @@ const getBook = async (bookId) => {
   }
 };
 */
-const updateBook = async (bookOptions) => {
+/*const updateBook = async (bookOptions) => {
     try {
       const { id, ...rest } = bookOptions;
       const updatedBook = await Book.update(rest, { where: { id } });
@@ -84,6 +83,24 @@ const updateBook = async (bookOptions) => {
       throw error;
     }
   };
+*/
+const updateBook = async (bookId, bookData) => {
+  try {
+    const [updatedRowsCount, updatedBooks] = await Book.update(bookData, {
+      where: { id: bookId, deleted: false },
+      returning: true,
+    });
+
+    if (updatedRowsCount === 0) {
+      throw new Error("Book not found");
+    }
+
+    return updatedBooks[0];
+  } catch (err) {
+    console.error("Error when updating book", err);
+    throw err;
+  }
+};
 
 module.exports = {
   createBook,
