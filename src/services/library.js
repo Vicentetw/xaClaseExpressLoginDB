@@ -2,13 +2,8 @@ const { Library, Book } = require("../models");
 const libraryProvider = require("../providers/libraryProvider");
 
 const createLibrary = async (library) => {
-    try {
-      const newLibrary = await libraryProvider.createLibrary(library);
-      return newLibrary;
-    } catch (error) {
-      throw error;
-    }
-  };
+  return await libraryProvider.createLibrary(library);
+};
 
 const getLibrary = async (libraryId) => {
   try {
@@ -25,16 +20,6 @@ const getLibrary = async (libraryId) => {
     throw error;
   }
 };
-/*const createLibrary = async (libraryData) => {
-    try {
-      // Crear una nueva librería en la base de datos
-      const newLibrary = await Library.create(libraryData);
-      return newLibrary;
-    } catch (error) {
-      throw new Error('Error al crear la librería');
-    }
-  };
-  */
 
 const getAllLibraries = async () => {
   try {
@@ -89,10 +74,10 @@ const addBookToLibrary = async (libraryId, book) => {
 };
 
 module.exports = {
-    createLibrary,
-    getLibrary,
-    getAllLibraries,
-    updateLibrary,
-    deleteLibrary,
-    addBookToLibrary,
-  };
+  createLibrary,
+  getLibrary,
+  getAllLibraries,
+  updateLibrary,
+  deleteLibrary,
+  addBookToLibrary,
+};

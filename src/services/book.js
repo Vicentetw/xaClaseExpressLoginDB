@@ -1,14 +1,10 @@
-const { Library, Book } = require("../models");
-const BookProvider = require("../providers/bookProvider");
+const { Book } = require("../models");
+const bookProvider = require("../providers/bookProvider");
 
 const createBook = async (book) => {
-    try {
-      const newBook = await bookProvider.createBook(book);
-      return newBook;
-    } catch (error) {
-      throw error;
-    }
+    return await bookProvider.createBook(book);
   };
+  
 
 const getBook = async (bookId) => {
   try {

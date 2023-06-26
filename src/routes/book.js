@@ -1,4 +1,5 @@
 const express = require('express');
+const { bookController } = require('../controllers');
 const router = express.Router();
 
 // Obtener todos los libros
@@ -13,10 +14,7 @@ router.get('/:id', (req, res) => {
 });
 
 // Crear un libro
-router.post('/', (req, res) => {
-  // Lógica para crear un nuevo libro
-});
-
+router.post("/", bookController.createBook);
 // Modificar un libro
 router.put('/:id', (req, res) => {
   const bookId = req.params.id;

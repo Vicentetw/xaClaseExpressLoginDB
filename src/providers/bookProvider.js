@@ -1,3 +1,4 @@
+const {Op} = require("sequelize");
 const { Book } = require("../models");
 
 const createBook = async (bookOptions) => {
@@ -5,6 +6,7 @@ const createBook = async (bookOptions) => {
     const newBook = await Book.create(bookOptions);
     return newBook;
   } catch (error) {
+    console.error("Error al crear book", error)
     throw error;
   }
 };

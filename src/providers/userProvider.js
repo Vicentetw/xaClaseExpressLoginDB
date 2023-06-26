@@ -1,3 +1,4 @@
+const {Op} = require("sequelize");
 const { User } = require("../models");
 
 const createUser = async (userOptions) => {
@@ -5,8 +6,10 @@ const createUser = async (userOptions) => {
     const newUser = await User.create(userOptions);
     return newUser;
   } catch (error) {
+    console.error("Error al crear usuario", error)
     throw error;
   }
+  
 };
 
 const deleteUser = async (userId) => {

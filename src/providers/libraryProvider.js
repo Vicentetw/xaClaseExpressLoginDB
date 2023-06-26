@@ -1,20 +1,16 @@
+const {Op} = require("sequelize");
 const { Library } = require("../models");
 
 const createLibrary = async (libraryOptions) => {
-    try {
-      const newLibrary = await Library.createLibrary(libraryOptions);
-      return newLibrary;
-    } catch (error) {
-      throw error;
-    }
-  };
-  
-/*
-const { LibraryService } = require('../services');
+  try {
+    const newLibrary = await Library.create(libraryOptions);
+    return newLibrary;
+  } catch (error) {
+    console.error("Error al crear library", error);
+    throw error;
+  }
+};
 
-const libraryService = new LibraryService();
-*/
 module.exports = {
-    createLibrary,
-    
-  };
+  createLibrary,
+};

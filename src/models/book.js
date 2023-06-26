@@ -1,6 +1,5 @@
 const { DataTypes } = require("sequelize");
 const { sequelize } = require("../config/dbConfig");
-const Library = require("./library");
 
 const Book = sequelize.define("Book", {
     id: {
@@ -13,11 +12,11 @@ const Book = sequelize.define("Book", {
         allowNull: false,
         unique: true,
     },
-    titulo: {
+    title: {
         type: DataTypes.STRING,
         allowNull: false,
     },
-    autor: {
+    author: {
         type: DataTypes.STRING,
         allowNull: false,
     },
@@ -31,5 +30,5 @@ const Book = sequelize.define("Book", {
         defaultValue: false,
     },
 });
-//Book.belongsTo(Library);
+
 module.exports = Book;

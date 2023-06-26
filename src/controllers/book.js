@@ -1,9 +1,8 @@
-const Book = require('../models/book');
-const books = require('../services/book')
+const bookService = require('../services/book')
 
 const getAllBooks = async (req, res) => {
   try {
-    const books = await Book.find({ deleted: false });
+    const books = await bookService.find({ deleted: false });
     res.json(books);
   } catch (error) {
     res.status(500).json({ message: error.message });
@@ -13,7 +12,7 @@ const getAllBooks = async (req, res) => {
 const getBookById = async (req, res) => {
   const bookId = req.params.id;
   try {
-    const book = await Book.findOne({ _id: bookId, deleted: false });
+    const book = await bookService.findOne({ _id: bookId, deleted: false });
     if (book) {
       res.json(book);
     } else {
@@ -25,34 +24,20 @@ const getBookById = async (req, res) => {
 };
 
 const createBook = async (req, res) => {
-  const { isbn, titulo, autor, year, library } = req.body;
-
-  if (!isbn || !titulo || !autor || !year || !library) {
-    return res.status(400).json({ message: 'Por favor, proporciona todos los campos requeridos' });
-  }
-
   try {
-    const newBook = new Book({
-      isbn,
-      titulo,
-      autor,
-      year,
-      library,
-    });
-
-    const savedBook = await newBook.save();
-
-    res.status(201).json(savedBook);
-  } catch (error) {
-    res.status(500).json({ message: error.message });
+    const newBook = await bookService.createBook(req.body);
+    res.json(newBook);
+  } catch (err) {
+    res.status(500).json({ action: "createBook", error: err.message });
   }
 };
+
 
 const updateBook = async (req, res) => {
   const bookId = req.params.id;
 
   try {
-    const existingBook = await Book.findOne({ _id: bookId, deleted: false });
+    const existingBook = await bookService.getBook({ _id: bookId, deleted: false });
     if (!existingBook) {
       return res.status(404).json({ message: 'Libro no encontrado' });
     }
@@ -75,7 +60,7 @@ const deleteBook = async (req, res) => {
   const bookId = req.params.id;
 
   try {
-    const existingBook = await Book.findOne({ _id: bookId, deleted: false });
+    const existingBook = await bookService.deleteBook({ _id: bookId, deleted: false });
     if (!existingBook) {
       return res.status(404).json({ message: 'Libro no encontrado' });
     }

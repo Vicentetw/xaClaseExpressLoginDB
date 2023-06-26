@@ -37,13 +37,14 @@ const { authMiddleware } = require("../middleware/authentication");
 const router = express.Router();
 
 // Crear librería (AUTH)
-router.post("/", authMiddleware, libraryController.createLibrary);
+router.post("/", libraryController.createLibrary);
 
 // Obtener una librería
 router.get("/:libraryId", libraryController.getLibrary);
 
 // Obtener todas las librerías
-router.get("/", libraryController.getAllLibraries);
+//router.get("/", libraryController.getAllLibraries);
+router.get('/all', authMiddleware, libraryController.getAllLibraries);
 
 // Modificar una librería (AUTH)
 router.put("/:libraryId", authMiddleware, libraryController.updateLibrary);

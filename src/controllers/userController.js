@@ -1,25 +1,10 @@
-const userService = require('../services');
-
+const userService = require('../services/user');
 const createUser = async (req, res) => {
   try {
-    // Lógica para crear un usuario
-    const { nombre, apellido, email, password } = req.body;
-
-    // Validación de datos
-    if (!nombre || !apellido || !email || !password) {
-      return res.status(400).json({ message: 'Faltan campos obligatorios' });
-    }
-
-    const newUser = await userService.createUser({
-      nombre,
-      apellido,
-      email,
-      password,
-    });
-
-    res.status(201).json(newUser);
-  } catch (error) {
-    res.status(500).json({ message: error.message });
+    const newUser = await userService.createUser(req.body);
+    res.json(newUser);
+  } catch (err) {
+    res.status(500).json({ action: "createUser", error: err.message });
   }
 };
 

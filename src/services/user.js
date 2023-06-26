@@ -26,6 +26,7 @@ const getAll = async () => {
 
 const createUser = async (user) => {
   return await userProvider.createUser(user);
+  
 };
 
 const updateUser = (id, user) => {
