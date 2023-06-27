@@ -13,9 +13,9 @@ router.get("/", (req, res) => {
 
 router.get('/all', authMiddleware, userController.getAll);
 
-router.get("/:userId", userController.getUser);
+router.get("/:userId", authMiddleware, userController.getUser);
 
-router.put("/:userId", userController.updateUser);
+router.put("/:userId", authMiddleware, userController.updateUser);
 
 /*router.put("/:userId", (req, res) => {
   const userId = req.params.userId;
@@ -23,6 +23,6 @@ router.put("/:userId", userController.updateUser);
   res.send({ id: userId, nombre, apellido, email, password});
 });*/
 
-router.delete("/:userId", userController.deleteUser);
+router.delete("/:userId", authMiddleware, userController.deleteUser);
 
 module.exports = router;

@@ -5,14 +5,13 @@ const { authMiddleware } = require("../middleware/authentication");
 const router = express.Router();
 
 // Crear librería (AUTH)
-router.post("/", libraryController.createLibrary);
+router.post("/", authMiddleware, libraryController.createLibrary);
+// Obtener todas las librerías get all debe estar antes qu addbooktolibrary o dará error
+
+router.get('/all', libraryController.getAllLibraries);
 
 // Obtener una librería
 router.get("/:libraryId", libraryController.getLibrary);
-
-// Obtener todas las librerías
-//router.get("/", libraryController.getAllLibraries);
-router.get('/all', authMiddleware, libraryController.getAllLibraries);
 
 // Modificar una librería (AUTH)
 router.put("/:libraryId", authMiddleware, libraryController.updateLibrary);

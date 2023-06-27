@@ -1,3 +1,4 @@
+const { libraryController } = require("../controllers");
 const { Library, Book } = require("../models");
 const libraryProvider = require("../providers/libraryProvider");
 
@@ -24,12 +25,14 @@ const getLibrary = async (libraryId) => {
 
 const getAllLibraries = async () => {
   try {
+    console.log("Error al obtener en service");
     const libraries = await Library.findAll({
-      include: Book,
+     // include: Book,
     });
 
     return libraries;
   } catch (error) {
+    console.error("Error al obtener las librerías en service", error);
     throw error;
   }
 };
