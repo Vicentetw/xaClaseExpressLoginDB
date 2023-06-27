@@ -55,7 +55,7 @@ const deleteBook = async (bookId) => {
     if (!book) {
       throw new Error("Book not found");
     }
-    if (book.deleted = true) {
+    if (book.deleted === true) {
       throw new Error('Book already deleted');
     }
     book.deleted = true;

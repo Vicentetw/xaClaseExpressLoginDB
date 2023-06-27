@@ -16,11 +16,11 @@ router.get("/:libraryId", libraryController.getLibrary);
 // Modificar una librería (AUTH)
 router.put("/:libraryId", authMiddleware, libraryController.updateLibrary);
 
-// Eliminar una librería (**) (AUTH)
-router.delete("/:libraryId", authMiddleware, libraryController.deleteLibrary);
-
 // Agregar un libro nuevo (*)
 router.post("/:libraryId/books", authMiddleware, libraryController.addBookToLibrary);
+
+// Eliminar una librería (**) (AUTH)
+router.delete("/:libraryId", authMiddleware, libraryController.deleteLibrary);
 
 module.exports = router;
 

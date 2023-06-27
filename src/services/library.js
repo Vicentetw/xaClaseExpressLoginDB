@@ -25,9 +25,9 @@ const getLibrary = async (libraryId) => {
 
 const getAllLibraries = async () => {
   try {
-    console.log("Error al obtener en service");
-    const libraries = await Library.findAll({
-     // include: Book,
+      const libraries = await Library.findAll({
+        paranoid: false, //incluye registros borrados logicamente
+     include: Book,
     });
 
     return libraries;
@@ -36,7 +36,18 @@ const getAllLibraries = async () => {
     throw error;
   }
 };
-
+/*
+//obtener listado obtine librerias que no han sido borradas lógicamene
+const getAllLibraries = async () => {
+    try {
+      const libraries = await Library.findAll({ where: { deleted: false } });
+      return libraries;
+    } catch (error) {
+      console.error('Error al obtener las librerías', error);
+      throw error;
+    }
+  };
+*/
 const updateLibrary = async (libraryId, library) => {
   try {
     await Library.update(library, {
@@ -51,14 +62,23 @@ const updateLibrary = async (libraryId, library) => {
   }
 };
 
-const deleteLibrary = async (libraryId) => {
-  try {
-    await Library.destroy({ where: { id: libraryId } });
-  } catch (error) {
-    throw error;
-  }
-};
-
+const deleteLibrary = async (LibraryId) => {
+    try {
+      const deletedLibrary = await libraryProvider.deleteLibrary(LibraryId);
+      return deletedLibrary;
+    } catch (error) {
+      console.error("Error when deleting Book", error);
+      throw error;
+    }
+  };
+ /* const deleteLibrary = async (libraryId) => {
+    try {
+      await Library.update({ deleted: true }, { where: { id: libraryId } });
+    } catch (error) {
+      throw error;
+    }
+  };
+*/
 const addBookToLibrary = async (libraryId, bookData) => {
     try {
         console.log("Iniciando función addBookToLibrary");

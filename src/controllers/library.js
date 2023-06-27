@@ -10,7 +10,7 @@ const createLibrary = async (req, res) => {
         res.status(500).json({ action: "createLibrary", error: err.message });
     }
 };
-const getAllLibraries = async (req, res) => {
+/*const getAllLibraries = async (req, res) => {
     try {
         const librarys = await libraryService.getAllLibraries(); // Obtener todos los usuarios desde el servicio
         res.status(200).json(librarys); // Enviar la lista de usuarios como respuesta
@@ -18,6 +18,16 @@ const getAllLibraries = async (req, res) => {
         res.status(500).json({ message: 'Error al obtener las librerias' });
     }
 };
+*/
+const getAllLibraries = async (req, res) => {
+    try {
+      const libraries = await libraryService.getAllLibraries();
+      const activeLibraries = libraries.filter(library => !library.deleted);
+      res.status(200).json(activeLibraries);
+    } catch (error) {
+      res.status(500).json({ message: 'Error retrieving libraries' });
+    }
+  };
 
 const getLibrary = async (req, res) => {
     try {
@@ -31,19 +41,36 @@ const getLibrary = async (req, res) => {
         res.status(500).json({ action: "getLibrary", error: err.message });
     }
 };
-
+/*
 const deleteLibrary = async (req, res) => {
     try {
-        const libraryId = req.params.libraryId;
-
-        // Lógica para eliminar un usuario
-        await libraryService.deleteLibrary(libraryId);
-
-        res.status(200).json({ message: 'Libreria eliminada con éxito' });
+      const deletedLibrary = await libraryService.deleteLibrary(req.params.libraryId);
+      res.json({ message: "Library deleted successfully", library: deletedLibrary });
     } catch (error) {
-        res.status(500).json({ message: 'Error al eliminar la libreria' });
+      res.status(500).json({ message: 'Error al eliminar la libreria' });
     }
-};
+  };
+*/
+/*const deleteLibrary = async (req, res) => {
+    try {
+      const libraryId = req.params.libraryId;
+      await libraryService.deleteLibrary(libraryId);
+      res.json({ message: "Library deleted successfully" });
+    } catch (error) {
+      res.status(500).json({ message: "Error deleting library" });
+    }
+  };
+  */
+  const deleteLibrary = async (req, res) => {
+    try {
+      const { libraryId } = req.params;
+      await libraryService.deleteLibrary(libraryId);
+      res.json({ message: 'Library deleted successfully' });
+    } catch (error) {
+      res.status(500).json({ message: 'Error al eliminar la librería' });
+    }
+  };
+
 const updateLibrary = async (req, res) => {
     try {
         const libraryId = req.params.libraryId;

@@ -7,6 +7,7 @@ const Library = sequelize.define("Library", {
         type: DataTypes.INTEGER,
         primaryKey: true,
         autoIncrement: true,
+        allowNull: false,
     },
     name: {
         type: DataTypes.STRING,
@@ -22,8 +23,8 @@ const Library = sequelize.define("Library", {
     },
     deleted: {
         type: DataTypes.BOOLEAN,
-        allowNull: false,
         defaultValue: false,
+        allowNull: false,
     },
 });
 /*

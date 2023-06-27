@@ -27,6 +27,26 @@ const getLibrary = async (libraryId) => {
       throw err;
     }
   };
+  const deleteLibrary = async (libraryId) => {
+    try {
+      const library = await getLibrary(libraryId);
+      if (!library) {
+        throw new Error("Library not found");
+      }
+      if (library.deleted === true) {
+        throw new Error('Library already deleted');
+      }
+      // Actualizar el atributo "deleted" en lugar de eliminar físicamente la librería
+      library.deleted = true;
+     // await library.save(); //quito save para hacer borrado lógico
+     await library.update({deleted: true});
+    } catch (error) {
+      console.error("Error al eliminar la librería", error);
+      throw error;
+    }
+  };
+  
+
 //para permitir agregar libro desde library debo modificar el controller de book (spanenglish)
   const addBookToLibrary = async (libraryId, bookOptions) => {
     try {
@@ -45,5 +65,5 @@ const getLibrary = async (libraryId) => {
     }
   };
 module.exports = {
-  createLibrary, getAllLibraries, getLibrary, addBookToLibrary,
+  createLibrary, getAllLibraries, getLibrary, deleteLibrary, addBookToLibrary,
 };
