@@ -29,6 +29,10 @@ const Book = sequelize.define("Book", {
         allowNull: false,
         defaultValue: false,
     },
+    libraryId: { // Nueva columna para el ID de la librería
+        type: DataTypes.INTEGER,
+        allowNull: false,
+    },
 });
 
 module.exports = Book;

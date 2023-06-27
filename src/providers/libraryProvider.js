@@ -1,5 +1,5 @@
 const {Op} = require("sequelize");
-const { Library } = require("../models");
+const { Library, Book } = require("../models");
 
 const createLibrary = async (libraryOptions) => {
   try {
@@ -27,6 +27,23 @@ const getLibrary = async (libraryId) => {
       throw err;
     }
   };
+//para permitir agregar libro desde library debo modificar el controller de book (spanenglish)
+  const addBookToLibrary = async (libraryId, bookOptions) => {
+    try {
+      const library = await Library.findByPk(libraryId);//busco el id de la librería
+      if (!library) {
+        throw new Error("Library not found"); //If not found, throw an error message
+      }
+      
+  //If it reaches this point, it means the library Id was found, interact whit the model, importo el modelo de Book
+      const newBook = await Book.create(bookOptions);
+      await library.addBook(newBook);
+      return newBook;
+    } catch (error) {
+      console.error("Error al agregar libro a la librería", error);
+      throw error;
+    }
+  };
 module.exports = {
-  createLibrary, getAllLibraries, getLibrary,
+  createLibrary, getAllLibraries, getLibrary, addBookToLibrary,
 };

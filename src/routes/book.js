@@ -12,7 +12,7 @@ router.get('/all', bookController.getAllBooks);
 router.get("/:bookId", bookController.getBookById);
 
 // Crear un libro
-router.post("/", bookController.createBook);
+router.post("/", authMiddleware, bookController.createBook);
 // Modificar un libro
 /*router.put('/:id', (req, res) => {
   const bookId = req.params.id;

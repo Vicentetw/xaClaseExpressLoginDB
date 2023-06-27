@@ -1,5 +1,6 @@
 const {Op} = require("sequelize");
 const { Book } = require("../models");
+const libraryService = require("../services/library");//importo para poder crear libro desde library
 
 /*
 const createBook = async (bookOptions) => {
@@ -53,6 +54,9 @@ const deleteBook = async (bookId) => {
     const book = await getBook(bookId);
     if (!book) {
       throw new Error("Book not found");
+    }
+    if (book.deleted = true) {
+      throw new Error('Book already deleted');
     }
     book.deleted = true;
     await book.save();

@@ -101,20 +101,21 @@ const deleteBook = async (bookId) => {
     throw err;
   }
 };
-const addBookToBook = async (bookId, book) => {
+const addBookToBook = async (bookId, newBook) => {
   try {
     const book = await Book.findByPk(bookId);
 
     if (!book) {
-      throw new Error("Librería no encontrada");
+      throw new Error("Libro no encontrado");
     }
 
-    const newBook = await Book.create(book);
+    const createdBook = await Book.create(newBook);
 
-    await book.addBook(newBook);
+    await book.addBook(createdBook);
 
     return book;
   } catch (error) {
+    console.error("Error al agregar libro al libro", error);
     throw error;
   }
 };

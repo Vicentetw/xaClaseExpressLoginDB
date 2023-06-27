@@ -26,8 +26,12 @@ const Library = sequelize.define("Library", {
         defaultValue: false,
     },
 });
-
+/*
 Library.hasMany(Book);
 Book.belongsTo(Library);
+*/
+//modifico modelo para agregar libro dede library
+Library.hasMany(Book, { foreignKey: 'LibraryId' });
+Book.belongsTo(Library, { foreignKey: 'LibraryId' });
 
 module.exports = Library;

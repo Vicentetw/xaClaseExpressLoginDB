@@ -1,6 +1,7 @@
 const { Library, Book } = require("../models");
 const libraryProvider = require("../providers/libraryProvider");
 
+
 const createLibrary = async (library) => {
   return await libraryProvider.createLibrary(library);
 };
@@ -55,24 +56,27 @@ const deleteLibrary = async (libraryId) => {
   }
 };
 
-const addBookToLibrary = async (libraryId, book) => {
-  try {
-    const library = await Library.findByPk(libraryId);
-
-    if (!library) {
-      throw new Error("Librería no encontrada");
+const addBookToLibrary = async (libraryId, bookData) => {
+    try {
+        console.log("Iniciando función addBookToLibrary");
+      const library = await Library.findByPk(libraryId);
+  
+      if (!library) {
+        console.log("Librería no encontrada");
+        throw new Error("Librería no encontrada");
+      }
+  
+      const newBook = await Book.create(bookData);
+  
+      await library.addBook(newBook);
+      console.log("Libro agregado a la librería exitosamente");
+  
+      return library;
+    } catch (error) {
+        console.error("Error al agregar el libro a la librería:", error);
+      throw error;
     }
-
-    const newBook = await Book.create(book);
-
-    await library.addBook(newBook);
-
-    return library;
-  } catch (error) {
-    throw error;
-  }
-};
-
+  };
 module.exports = {
   createLibrary,
   getLibrary,
