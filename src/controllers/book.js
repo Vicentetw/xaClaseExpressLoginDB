@@ -54,9 +54,9 @@ const createBook = async (req, res) => {
     }
   };
   */
-/*
+
 //lo reemplazo porque no me permite crear el libro enviando el id de librería en el json
- const createBook = async (req, res) => {
+ /*const createBook = async (req, res) => {
    try {
      const bookOptions = req.body;
      const libraryId = req.query.libraryId;
@@ -73,7 +73,26 @@ const createBook = async (req, res) => {
      res.status(500).json({ message: "Error al crear el libro", error: error.message });
    }
  };
-*/
+/*
+const createBook = async (req, res) => {
+  try {
+    const bookData = req.body;
+    const libraryId = req.query.libraryId;
+
+    if (libraryId) {
+      bookData.libraryId = libraryId;
+
+      const newBook = await libraryService.addBookToLibrary(libraryId, bookData);
+
+      res.status(201).json(newBook);
+    } else {
+      throw new Error("LibraryId is required");
+    }
+  } catch (error) {
+    console.error("Error al crear el libro", error);
+    res.status(500).json({ message: "Error al crear el libro", error: error.message });
+  }
+};*/
 const createBook = async (req, res) => {
     try {
         const bookOptions = req.body;

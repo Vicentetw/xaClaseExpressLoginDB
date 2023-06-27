@@ -4,7 +4,7 @@ const { authMiddleware } = require("../middleware/authentication");
 const router = express.Router();
 
 // Obtener todos los libros
-
+router.post("/", authMiddleware, bookController.createBook);
 router.get('/all', bookController.getAllBooks);
 
 // Obtener un libro en particular
@@ -12,7 +12,7 @@ router.get('/all', bookController.getAllBooks);
 router.get("/:bookId", bookController.getBookById);
 
 // Crear un libro
-router.post("/", authMiddleware, bookController.createBook);
+//router.post("/", authMiddleware, bookController.createBook);
 // Modificar un libro
 /*router.put('/:id', (req, res) => {
   const bookId = req.params.id;

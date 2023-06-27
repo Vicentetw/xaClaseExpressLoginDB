@@ -1,7 +1,14 @@
 const libraryService = require("../services/library");
 const { Library, Book } = require("../models");
 
-
+const getAllLibraries = async (req, res) => {
+  try {
+      const libraries = await libraryService.getAllLibraries({ deleted: false });
+      res.status(200).json(libraries); // Enviar la lista de usuarios como respuesta
+  } catch (error) {
+      res.status(500).json({ message: 'Error al obtener las libraries' });
+  }
+};
 const createLibrary = async (req, res) => {
     try {
         const newLibrary = await libraryService.createLibrary(req.body);
@@ -19,7 +26,7 @@ const createLibrary = async (req, res) => {
     }
 };
 */
-const getAllLibraries = async (req, res) => {
+const getAllLibraries2 = async (req, res) => {
     try {
       const libraries = await libraryService.getAllLibraries();
       const activeLibraries = libraries.filter(library => !library.deleted);
