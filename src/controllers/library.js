@@ -26,6 +26,7 @@ const createLibrary = async (req, res) => {
     }
 };
 */
+/*
 const getAllLibraries2 = async (req, res) => {
     try {
       const libraries = await libraryService.getAllLibraries();
@@ -35,7 +36,7 @@ const getAllLibraries2 = async (req, res) => {
       res.status(500).json({ message: 'Error retrieving libraries' });
     }
   };
-
+*/
 const getLibrary = async (req, res) => {
     try {
         const library = await libraryService.getLibrary(req.params.libraryId);

@@ -24,75 +24,6 @@ const getBookById = async (req, res) => {
 };
 
 
-
-/*
-reemplazo para permitir crear libro desde library
-const createBook = async (req, res) => {
-  try {
-    const newBook = await bookService.createBook(req.body);
-    res.json(newBook);
-  } catch (err) {
-    res.status(500).json({ action: "createBook", error: err.message });
-  }
-};
-*/
-/*const createBook = async (req, res) => {
-    try {
-      const bookOptions = req.body;
-      const libraryId = req.query.libraryId;
-  //si tengo el libraryId agrego creo el libro y lo agrego al id de librería con service de library
-      if (libraryId) {
-        const newBook = await libraryService.addBookToLibrary(libraryId, bookOptions);
-        res.json(newBook);
-  //si no tengo el id de library creo directamente el libro con service de book
-    } else {
-        const newBook = await bookService.createBook(bookOptions);
-        res.json(newBook);
-      }
-    } catch (error) {
-      res.status(500).json({ message: "Error al crear el libro" });
-    }
-  };
-  */
-
-//lo reemplazo porque no me permite crear el libro enviando el id de librería en el json
- /*const createBook = async (req, res) => {
-   try {
-     const bookOptions = req.body;
-     const libraryId = req.query.libraryId;
- 
-     if (libraryId) {
-       const newBook = await libraryService.addBookToLibrary(libraryId, bookOptions);
-       res.json(newBook);
-     } else {
-       // Si no se proporciona el libraryId, lanzar un error
-       throw new Error("LibraryId is required");
-     }
-   } catch (error) {
-     console.error("Error al crear el libro", error);
-     res.status(500).json({ message: "Error al crear el libro", error: error.message });
-   }
- };
-/*
-const createBook = async (req, res) => {
-  try {
-    const bookData = req.body;
-    const libraryId = req.query.libraryId;
-
-    if (libraryId) {
-      bookData.libraryId = libraryId;
-
-      const newBook = await libraryService.addBookToLibrary(libraryId, bookData);
-
-      res.status(201).json(newBook);
-    } else {
-      throw new Error("LibraryId is required");
-    }
-  } catch (error) {
-    console.error("Error al crear el libro", error);
-    res.status(500).json({ message: "Error al crear el libro", error: error.message });
-  }
-};*/
 const createBook = async (req, res) => {
     try {
         const bookOptions = req.body;
@@ -102,6 +33,10 @@ const createBook = async (req, res) => {
             throw new Error("LibraryId is required");
         }
 
+        //valido que ingresen todos los datos requeridos
+        if (!bookOptions.isbn || !bookOptions.title || !bookOptions.author || !bookOptions.year) {
+            throw new Error("ISBN, title, author, and year are required");
+        }
         // Creao el libro con los datos proporcionados y el ID de la librería
         const newBook = await bookService.createBook(bookOptions);
 
@@ -123,26 +58,8 @@ const updateBook = async (req, res) => {
         res.status(500).json({ action: "updateBook", error: err.message });
     }
 };
-/*
-const deleteBook = async (req, res) => {
-  const bookId = req.params.id;
 
-  try {
-    const existingBook = await bookService.deleteBook({ _id: bookId, deleted: false });
-    if (!existingBook) {
-      return res.status(404).json({ message: 'Libro no encontrado' });
-    }
 
-    existingBook.deleted = true;
-
-    const updatedBook = await existingBook.save();
-
-    res.json(updatedBook);
-  } catch (error) {
-    res.status(500).json({ message: error.message });
-  }
-};
-*/
 const deleteBook = async (req, res) => {
     try {
         const deletedBook = await bookService.deleteBook(req.params.bookId);
