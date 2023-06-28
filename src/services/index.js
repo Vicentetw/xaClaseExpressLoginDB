@@ -4,6 +4,6 @@ const bookService = require('./book');
 
 module.exports = {
     userService,
-     libraryService, 
-     bookService,
-    };
+    libraryService,
+    bookService,
+};

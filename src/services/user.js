@@ -26,14 +26,9 @@ const getAll = async () => {
 
 const createUser = async (user) => {
   return await userProvider.createUser(user);
-  
+
 };
 
-/*const updateUser = (id, user) => {
-  // Llamada al proveedor con el objeto user
-  return user;
-};
-*/
 const updateUser = async (userId, updatedUser) => {
   try {
     const result = await userProvider.updateUser(userId, updatedUser);
@@ -53,7 +48,7 @@ const deleteUser = async (id) => {
   }
 };
 
-const queryUser = (name) => {};
+const queryUser = (name) => { };
 
 module.exports = {
   getUser,

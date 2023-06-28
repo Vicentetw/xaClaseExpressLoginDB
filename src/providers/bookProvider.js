@@ -1,4 +1,4 @@
-const {Op} = require("sequelize");
+const { Op } = require("sequelize");
 const { Book } = require("../models");
 const libraryService = require("../services/library");//importo para poder crear libro desde library
 
@@ -14,30 +14,30 @@ const createBook = async (bookOptions) => {
 };
 */
 const createBook = async (bookOptions) => {
-    try {
-      const { isbn } = bookOptions;
-  
-      // Verificar si ya existe un libro con el mismo ISBN
-      const existingBook = await Book.findOne({
-        where: {
-          isbn: {
-            [Op.eq]: isbn, // Utilizando el operador de igualdad (eq)
-          },
+  try {
+    const { isbn } = bookOptions;
+
+    // Verificar si ya existe un libro con el mismo ISBN
+    const existingBook = await Book.findOne({
+      where: {
+        isbn: {
+          [Op.eq]: isbn, // Utilizando el operador de igualdad (eq)
         },
-      });
-  
-      if (existingBook) {
-        throw new Error("ISBN already exists");
-      }
-  
-      // Crear el libro si no existe duplicado de ISBN
-      const newBook = await Book.create(bookOptions);
-      return newBook;
-    } catch (error) {
-      console.error("Error al crear book", error);
-      throw error;
+      },
+    });
+
+    if (existingBook) {
+      throw new Error("ISBN already exists");
     }
-  };
+
+    // Crear el libro si no existe duplicado de ISBN
+    const newBook = await Book.create(bookOptions);
+    return newBook;
+  } catch (error) {
+    console.error("Error al crear book", error);
+    throw error;
+  }
+};
 /*
 //Cambio a logic delete
 const deleteBook = async (bookId) => {
@@ -67,7 +67,6 @@ const deleteBook = async (bookId) => {
   }
 };
 
-
 const getAllBooks = async () => {
   try {
     const books = await Book.findAll();
@@ -85,7 +84,7 @@ const getBook = async (bookId) => {
     throw err;
   }
 };
-  
+
 /*const updateBook = async (bookId, bookData) => {
   try {
     const updatedBook = await Book.update(bookData, { where: { id: bookId } });
@@ -106,14 +105,15 @@ const getBook = async (bookId) => {
     }
   };
 */
+//Parámetros: bookId (ID del libro a actualizar) y bookData (datos actualizados del libro).
 const updateBook = async (bookId, bookData) => {
   try {
     const [updatedRowsCount, updatedBooks] = await Book.update(bookData, {
-      where: { id: bookId, deleted: false },
+      where: { id: bookId, deleted: false },//solo actualizo los libros que no han sido borrados
       returning: true,
     });
 
-    if (updatedRowsCount === 0) {
+    if (updatedRowsCount === 0) { //si hay cero filas indica que no encontró libros
       throw new Error("Book not found");
     }
 

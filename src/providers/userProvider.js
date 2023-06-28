@@ -1,4 +1,4 @@
-const {Op} = require("sequelize");
+const { Op } = require("sequelize");
 const { User } = require("../models");
 
 const createUser = async (userOptions) => {
@@ -9,7 +9,7 @@ const createUser = async (userOptions) => {
     console.error("Error al crear usuario", error)
     throw error;
   }
-  
+
 };
 
 const deleteUser = async (userId) => {
@@ -38,6 +38,7 @@ const getUser = async (userId) => {
     throw err;
   }
 };
+
 const updateUser = async (userId, updatedUser) => {
   try {
     const result = await User.update(updatedUser, { where: { id: userId } });
