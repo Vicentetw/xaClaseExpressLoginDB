@@ -14,7 +14,8 @@ router.post("/", async (req, res) => {
     } else {
       const dbUser = await userProvider.validateUser(user, password);
       if (dbUser) {
-        const token = jwt.sign({ user: dbUser.email }, secret);
+      //  const token = jwt.sign({ user: dbUser.email }, secret);
+      const token = jwt.sign({ user: dbUser.user }, secret); // Cambio "email" a "user"
         res.json({ token });
       } else {
         res.status(401).json({ message: "Authentication failed" });

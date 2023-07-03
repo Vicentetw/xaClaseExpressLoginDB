@@ -11,10 +11,11 @@ const app = express();
 
 app.use(bodyParser.json());
 app.use(logging);
+app.use('/login', authRouter);
 app.use('/user', authMiddleware, userRouter);
 app.use('/library', libraryRouter);
 app.use('/book',  bookRouter);
-app.use('/login',  authRouter);
+
 
 (async () => {
   try {
