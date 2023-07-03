@@ -10,28 +10,33 @@ passport.use(new JWTStrategy({
   secretOrKey: secret,
 }, (jwtPayload, done) => {
   if (jwtPayload.user === 'admin') {
-    const usuario = jwtPayload;  
+    const usuario = jwtPayload;
     return done(null, usuario);
   } else {
     return done(null, false, { message: "El usuario no es válido" });
   }
 }));
 
-const authMiddleware = passport.authenticate("jwt", {session: false});
+const authMiddleware = passport.authenticate("jwt", { session: false });
+
 const userIsAdminMDW = (req, res, next) => {
-  return passport.authenticate("jwt", { session: false }, (err, user, info) => {
+  passport.authenticate("jwt", { session: false }, (err, user, info) => {
     if (err) {
-      console.err(err);
+      console.error(err);
       return next(err);
     }
 
-    if (user.role === "Admin") {
+    if (user && user.role === "admin") {
       req.user = user;
       return next();
     }
 
-    res.status(401).json({ error: "User not Admin" });
+    res.status(401).json({ error: "User is not an admin" });
   })(req, res, next);
 };
 
-module.exports = {secret , authMiddleware, userIsAdminMDW,};
+module.exports = {
+  secret,
+  authMiddleware,
+  userIsAdminMDW,
+};
