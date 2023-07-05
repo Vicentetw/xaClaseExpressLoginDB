@@ -18,7 +18,7 @@ passport.use(new JWTStrategy({
 }));
 
 const authMiddleware = passport.authenticate("jwt", { session: false });
-
+/*
 const userIsAdminMDW = (req, res, next) => {
   passport.authenticate("jwt", { session: false }, (err, user, info) => {
     if (err) {
@@ -37,6 +37,24 @@ const userIsAdminMDW = (req, res, next) => {
   })(req, res, next);
 };
 
+*/
+const userIsAdminMDW = (req, res, next) => {
+  passport.authenticate('jwt', { session: false }, (err, user, info) => {
+    if (err) {
+      console.error(err);
+      return next(err);
+    }
+
+    console.log('User:', user); // Verificar el objeto user obtenido del token
+    if (user && user.role === 'admin') {
+      req.user = user;
+      return next();
+    }
+
+    console.log('Info:', info); // Verificar el objeto info proporcionado por Passport
+    res.status(403).json({ error: 'User is not an admin' });
+  })(req, res, next);
+};
 
 module.exports = {
   secret,

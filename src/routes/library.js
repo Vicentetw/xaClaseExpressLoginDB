@@ -15,13 +15,13 @@ router.post("/", authMiddleware, userIsAdminMDW, libraryController.createLibrary
 router.get("/:libraryId", libraryController.getLibrary);
 
 // Modificar una librería
-router.put("/:libraryId", authMiddleware, libraryController.updateLibrary);
+router.put("/:libraryId", authMiddleware, userIsAdminMDW,libraryController.updateLibrary);
 
 // Agregar un libro nuevo desde librería
-router.post("/:libraryId/books", authMiddleware, libraryController.addBookToLibrary);
+router.post("/:libraryId/books", authMiddleware, userIsAdminMDW, libraryController.addBookToLibrary);
 
 // Eliminar una librería en forma lógica
-router.delete("/:libraryId", authMiddleware, libraryController.deleteLibrary);
+router.delete("/:libraryId", authMiddleware, userIsAdminMDW,libraryController.deleteLibrary);
 
 module.exports = router;
 

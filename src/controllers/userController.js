@@ -1,8 +1,10 @@
 const userService = require('../services/user');
 const createUser = async (req, res) => {
   try {
+    // Agregar el campo 'role' con valor 'user' al objeto req.body
+    req.body.role = 'user';
    // const newUser = await userService.createUser(req.body);
-   const newUser = await userService.createUser({...req.body, role:"user"}); 
+   const newUser = await userService.createUser(req.body); 
    res.json(newUser);
   } catch (err) {
     res.status(400).json({ action: "createUser", error: err.message });
@@ -69,10 +71,34 @@ const updateUser = async (req, res) => {
 };
 const createAdmin = async (req, res) => {
   try {
-    const newAdmin = await userService.createUser({ ...req.body, role: "admin" });
-    res.json(newAdmin);
+    // Agregar el campo 'role' con valor 'admin' al objeto req.body
+    req.body.role = 'admin';
+
+    const newUser = await userService.createUser(req.body);
+    res.json(newUser);
   } catch (err) {
-    res.status(400).json({ action: "createAdmin", error: err.message });
+    res.status(400).json({ action: "createAdminUser", error: err.message });
+  }
+};
+const updateAdminUser = async (req, res) => {
+  try {
+    const { userId } = req.params;
+    const updatedUser = req.body;
+
+    // Asegurarse de que el usuario a actualizar sea un admin
+    if (updatedUser.role !== 'admin') {
+      return res.status(400).json({ action: "updateAdminUser", error: "El usuario debe tener el rol de admin" });
+    }
+
+    const result = await userService.updateUser(userId, updatedUser);
+
+    if (result === 0) {
+      res.status(404).json({ action: 'updateAdminUser', message: 'No se encontró el usuario.' });
+    } else {
+      res.json({ message: 'Usuario admin actualizado correctamente.' });
+    }
+  } catch (error) {
+    res.status(400).json({ action: 'updateAdminUser', error: error.message });
   }
 };
 
@@ -83,4 +109,5 @@ module.exports = {
   deleteUser,
   updateUser,
   createAdmin,
+  updateAdminUser,
 };
