@@ -1,6 +1,7 @@
 const express = require("express");
 const userController = require('../controllers/userController');
-const { authMiddleware } = require("../middleware/authentication");
+//const userIsAdminMDW =require("../middleware/authentication");
+const { authMiddleware, userIsAdminMDW } = require("../middleware/authentication");
 
 const router = express.Router();
 
@@ -12,8 +13,15 @@ router.get("/", (req, res) => {
 });
 
 router.get('/all', authMiddleware, userController.getAll);
-router.get("/:userId", authMiddleware, userController.getUser);
-router.put("/:userId", authMiddleware, userController.updateUser);
-router.delete("/:userId", authMiddleware, userController.deleteUser);
+router.get("/:userId", authMiddleware, userIsAdminMDW, userController.getUser);
+router.put("/:userId", authMiddleware, userIsAdminMDW, userController.updateUser);
+router.delete("/:userId", authMiddleware, userIsAdminMDW,userController.deleteUser);
+/*
+//usuarios sólo con rol administrador
+router.get('/all', userIsAdminMDW, userController.getAll);
+router.get("/:userId", userIsAdminMDW, userController.getUser);
+router.put("/:userId", userIsAdminMDW, userController.updateUser);
+router.delete("/:userId", userIsAdminMDW, userController.deleteUser);
+*/
 
 module.exports = router;

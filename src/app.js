@@ -13,9 +13,11 @@ app.use(bodyParser.json());
 app.use(logging);
 app.use('/login', authRouter);
 app.use('/user', authMiddleware, userRouter);
-app.use('/library', libraryRouter);
+/*app.use('/library', libraryRouter);
 app.use('/book',  bookRouter);
-
+*/
+app.use('/library', authMiddleware, libraryRouter);
+app.use('/book', authMiddleware, bookRouter);
 
 (async () => {
   try {

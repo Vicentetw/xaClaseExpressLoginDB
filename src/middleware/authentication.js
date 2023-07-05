@@ -26,14 +26,17 @@ const userIsAdminMDW = (req, res, next) => {
       return next(err);
     }
 
+    console.log("User:", user); // Verificar el objeto user obtenido del token
     if (user && user.role === "admin") {
       req.user = user;
       return next();
     }
 
+    console.log("Info:", info); // Verificar el objeto info proporcionado por Passport
     res.status(401).json({ error: "User is not an admin" });
   })(req, res, next);
 };
+
 
 module.exports = {
   secret,

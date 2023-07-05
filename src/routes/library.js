@@ -1,15 +1,15 @@
 const express = require("express");
 const libraryController = require("../controllers/library");
-const { authMiddleware } = require("../middleware/authentication");
+const { authMiddleware ,userIsAdminMDW } = require("../middleware/authentication");
 
 const router = express.Router();
-
-
-router.post("/", authMiddleware, libraryController.createLibrary);
+//router.get('/', libraryController.getAllLibraries);
+router.get('/all', libraryController.getAllLibraries);
+router.post("/", authMiddleware, userIsAdminMDW, libraryController.createLibrary);
 
 // Obtener todas las librerías get all debe estar antes qu addbooktolibrary o dará error
 //obtiene incluso las marcadas como deleted : true
-router.get('/all', libraryController.getAllLibraries);
+
 
 // Obtener una librería
 router.get("/:libraryId", libraryController.getLibrary);
