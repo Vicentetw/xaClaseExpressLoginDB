@@ -1,8 +1,9 @@
 const userService = require('../services/user');
 const createUser = async (req, res) => {
   try {
-    const newUser = await userService.createUser(req.body);
-    res.json(newUser);
+   // const newUser = await userService.createUser(req.body);
+   const newUser = await userService.createUser({...req.body, role:"user"}); 
+   res.json(newUser);
   } catch (err) {
     res.status(400).json({ action: "createUser", error: err.message });
   }
@@ -66,6 +67,14 @@ const updateUser = async (req, res) => {
     res.status(400).json({ action: 'updateUser', error: error.message });
   }
 };
+const createAdmin = async (req, res) => {
+  try {
+    const newAdmin = await userService.createUser({ ...req.body, role: "admin" });
+    res.json(newAdmin);
+  } catch (err) {
+    res.status(400).json({ action: "createAdmin", error: err.message });
+  }
+};
 
 module.exports = {
   createUser,
@@ -73,4 +82,5 @@ module.exports = {
   getUser,
   deleteUser,
   updateUser,
+  createAdmin,
 };
