@@ -9,7 +9,9 @@ passport.use(new JWTStrategy({
   jwtFromRequest: ExtractJWT.fromAuthHeaderAsBearerToken(),
   secretOrKey: secret,
 }, (jwtPayload, done) => {
-  if (jwtPayload.user === 'admin') {
+  //if (jwtPayload.role === 'admin') { //acá verifico el rol que sea admin
+  //modifico mi if para permitir acceso a usuarios con role user y admin
+  if (jwtPayload.role === 'admin' || jwtPayload.role === 'user') {
     const usuario = jwtPayload;
     return done(null, usuario);
   } else {
@@ -46,9 +48,22 @@ const userIsAdminMDW = (req, res, next) => {
     }
 
     console.log('User:', user); // Verificar el objeto user obtenido del token
-    if (user && user.role === 'admin') {
+    //if (user && user.role === 'admin') { //
+    /* if (user.role === 'admin' || (user.role === 'user' && req.method === 'GET')){
+       req.user = user;
+       return next();
+     }
+ */
+    //implemento un log con el tipo de role
+    if (user) {
       req.user = user;
-      return next();
+      if (user.role === 'admin') {
+        console.log('Usuario autenticado como admin');
+        return next();
+      } else if (user.role === 'user' && req.method === 'GET') {
+        console.log('Usuario autenticado como user en una petición GET');
+        return next();
+      }
     }
 
     console.log('Info:', info); // Verificar el objeto info proporcionado por Passport

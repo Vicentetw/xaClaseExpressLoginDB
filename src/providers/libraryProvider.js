@@ -13,7 +13,7 @@ const createLibrary = async (libraryOptions) => {
 
 const getAllLibraries = async () => {
     try {
-        const library = await Library.findAll({include: Book,});
+        const library = await Library.findAll({ include: Book, });
         return library;
     } catch (error) {
         throw error;

@@ -27,6 +27,8 @@ router.post("/", async (req, res) => {
   }
 });
 */
+/*
+//esto solo permite logearse a admin
 router.post("/", async (req, res) => {
   const { user, password } = req.body;
   try {
@@ -47,4 +49,24 @@ router.post("/", async (req, res) => {
     res.status(500).json({ message: "Internal Server Error" });
   }
 });
+*/
+//elimino la condicion  if (user === "admin" && password === "admin") 
+
+router.post("/", async (req, res) => {
+  const { nombre, password } = req.body;
+  try {
+    const dbUser = await userProvider.validateUser(nombre, password);
+    console.log("DB User:", dbUser); // Agrega este console.log para verificar los datos obtenidos de la base de datos
+    if (dbUser) {
+      const token = jwt.sign({ user: dbUser.nombre, role: dbUser.role }, secret);
+      res.json({ token });
+    } else {
+      res.status(401).json({ message: "Authentication failed" });
+    }
+  } catch (error) {
+    console.error("Error during authentication", error);
+    res.status(500).json({ message: "Internal Server Error" });
+  }
+});
+
 module.exports = router;

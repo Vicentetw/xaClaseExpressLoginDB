@@ -37,14 +37,14 @@ const getLibrary = async (libraryId) => {
 };*/
 const getAllLibraries = async () => {
     try {
-      const libraries = await libraryProvider.getAllLibraries(); // Obtener todas las librerías desde el proveedor
-      return libraries;
+        const libraries = await libraryProvider.getAllLibraries(); // Obtener todas las librerías desde el proveedor
+        return libraries;
     } catch (error) {
-      console.error("Error al obtener las librerias desde el service", error);
-      throw error;
+        console.error("Error al obtener las librerias desde el service", error);
+        throw error;
     }
-  };
-  
+};
+
 /*
 //obtener listado obtine librerias que no han sido borradas l'
 const getAllLibraries = async () => {

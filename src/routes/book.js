@@ -4,8 +4,8 @@ const { authMiddleware , userIsAdminMDW } = require("../middleware/authenticatio
 const router = express.Router();
 
 
-router.get('/all', bookController.getAllBooks);
-router.get("/:bookId", bookController.getBookById);
+router.get('/all', authMiddleware, userIsAdminMDW, bookController.getAllBooks);
+router.get("/:bookId", authMiddleware, userIsAdminMDW, bookController.getBookById);
 router.put("/:bookId", authMiddleware, userIsAdminMDW, bookController.updateBook);
 router.delete('/:bookId', authMiddleware, userIsAdminMDW, bookController.deleteBook);
 router.post("/", authMiddleware, userIsAdminMDW, bookController.createBook); 

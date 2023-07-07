@@ -3,19 +3,19 @@ const { Library, Book } = require("../models");
 
 const getAllLibraries = async (req, res) => {
   try {
-      const libraries = await libraryService.getAllLibraries({ deleted: false });
-      res.status(200).json(libraries); // Enviar la lista de usuarios como respuesta
+    const libraries = await libraryService.getAllLibraries({ deleted: false });
+    res.status(200).json(libraries); // Enviar la lista de usuarios como respuesta
   } catch (error) {
-      res.status(500).json({ message: 'Error al obtener las libraries' });
+    res.status(500).json({ message: 'Error al obtener las libraries' });
   }
 };
 const createLibrary = async (req, res) => {
-    try {
-        const newLibrary = await libraryService.createLibrary(req.body);
-        res.json(newLibrary);
-    } catch (err) {
-        res.status(500).json({ action: "createLibrary", error: err.message });
-    }
+  try {
+    const newLibrary = await libraryService.createLibrary(req.body);
+    res.json(newLibrary);
+  } catch (err) {
+    res.status(500).json({ action: "createLibrary", error: err.message });
+  }
 };
 /*const getAllLibraries = async (req, res) => {
     try {
@@ -38,16 +38,16 @@ const getAllLibraries2 = async (req, res) => {
   };
 */
 const getLibrary = async (req, res) => {
-    try {
-        const library = await libraryService.getLibrary(req.params.libraryId);
-        if (!library) {
-            res.status(404).json({ action: "getLibrary", error: "Library Not Found" });
-        } else {
-            res.json(library);
-        }
-    } catch (err) {
-        res.status(500).json({ action: "getLibrary", error: err.message });
+  try {
+    const library = await libraryService.getLibrary(req.params.libraryId);
+    if (!library) {
+      res.status(404).json({ action: "getLibrary", error: "Library Not Found" });
+    } else {
+      res.json(library);
     }
+  } catch (err) {
+    res.status(500).json({ action: "getLibrary", error: err.message });
+  }
 };
 /*
 const deleteLibrary = async (req, res) => {
@@ -69,24 +69,24 @@ const deleteLibrary = async (req, res) => {
     }
   };
   */
-  const deleteLibrary = async (req, res) => {
-    try {
-      const { libraryId } = req.params;
-      await libraryService.deleteLibrary(libraryId);
-      res.json({ message: 'Library deleted successfully' });
-    } catch (error) {
-      res.status(500).json({ message: 'Error al eliminar la librería' });
-    }
-  };
+const deleteLibrary = async (req, res) => {
+  try {
+    const { libraryId } = req.params;
+    await libraryService.deleteLibrary(libraryId);
+    res.json({ message: 'Library deleted successfully' });
+  } catch (error) {
+    res.status(500).json({ message: 'Error al eliminar la librería' });
+  }
+};
 
 const updateLibrary = async (req, res) => {
-    try {
-        const libraryId = req.params.libraryId;
-        const updatedLibrary = await libraryService.updateLibrary(libraryId, req.body);
-        res.json(updatedLibrary);
-    } catch (error) {
-        res.status(500).json({ message: "Error al actualizar la librería" });
-    }
+  try {
+    const libraryId = req.params.libraryId;
+    const updatedLibrary = await libraryService.updateLibrary(libraryId, req.body);
+    res.json(updatedLibrary);
+  } catch (error) {
+    res.status(500).json({ message: "Error al actualizar la librería" });
+  }
 };
 
 /*const addBookToLibrary = async (req, res) => {
@@ -175,10 +175,10 @@ const addBookToLibrary = async (req, res) => {
 
 
 module.exports = {
-    createLibrary,
-    getAllLibraries,
-    getLibrary,
-    deleteLibrary,
-    updateLibrary,
-    addBookToLibrary,
+  createLibrary,
+  getAllLibraries,
+  getLibrary,
+  deleteLibrary,
+  updateLibrary,
+  addBookToLibrary,
 };

@@ -1,5 +1,5 @@
 const userService = require('../services/user');
-const createUser = async (req, res) => {
+/*const createUser = async (req, res) => {
   try {
     // Agregar el campo 'role' con valor 'user' al objeto req.body
     req.body.role = 'user';
@@ -10,7 +10,15 @@ const createUser = async (req, res) => {
     res.status(400).json({ action: "createUser", error: err.message });
   }
 };
-
+*/
+const createUser = async (req, res) => {
+  try {
+    const newUser = await userService.createUser(req.body);
+    res.json(newUser);
+  } catch (err) {
+    res.status(400).json({ action: "createUser", error: err.message });
+  }
+};
 const getAll = async (req, res) => {
   try {
     const users = await userService.getAll(); // Obtener todos los usuarios desde el servicio

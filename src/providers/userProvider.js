@@ -52,7 +52,7 @@ const updateUser = async (userId, updatedUser) => {
     throw error;
   }
 };
-
+/*
 const validateUser = async (email, password) => {
   try {
     const user = await User.findAll({
@@ -72,7 +72,57 @@ const validateUser = async (email, password) => {
     return false;
   }
 };
+*/
 
+const validateUser = async (nombre, password) => {
+  try {
+    const user = await User.findOne({
+      where: {
+        nombre: nombre,
+        password: password,
+      },
+    });
+
+    console.log("User from DB:", user);
+    /*
+        if (user.length !== 0) {
+          return user;
+        } else {
+          return false;
+        }
+        */
+    if (!user) {
+      return false;
+    } else {
+      return user;
+    }
+  } catch (error) {
+    console.error("Error when validating User", error);
+    return false;
+  }
+};
+
+/*
+const validateUser = async (nombre, password) => {
+  try {
+    const user = await User.findAll({
+      where: {
+        nombre: nombre,
+        password: password,
+      },
+    });
+
+    if (user.length !== 0) {
+      return user;
+    } else {
+      return false;
+    }
+  } catch (error) {
+    console.error("Error when validating User", error);
+    return false;
+  }
+};
+*/
 module.exports = {
   createUser,
   deleteUser,

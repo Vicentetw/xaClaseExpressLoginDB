@@ -3,7 +3,7 @@ const bodyParser = require('body-parser');
 const { logging } = require('./middleware');
 const { userRouter, authRouter, libraryRouter, bookRouter } = require('./routes');
 const { initializeDB } = require('./config/dbConfig');
-const {authMiddleware} = require('./middleware/authentication');
+const { authMiddleware } = require('./middleware/authentication');
 
 const PORT = 8080;
 
