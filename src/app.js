@@ -4,11 +4,22 @@ const { logging } = require('./middleware');
 const { userRouter, authRouter, libraryRouter, bookRouter } = require('./routes');
 const { initializeDB } = require('./config/dbConfig');
 const { authMiddleware } = require('./middleware/authentication');
+const cors=require('cors');
 
 const PORT = 8080;
-
 const app = express();
+// Middleware personalizado para configurar los encabezados CORS
+const allowCors = (req, res, next) => {
+  res.header('Access-Control-Allow-Origin', '*');
+  res.header('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE');
+  res.header('Access-Control-Allow-Headers', 'Content-Type, Authorization');
+  next();
+};
 
+
+// Configurar CORS
+app.use(cors());
+app.use(allowCors);
 app.use(bodyParser.json());
 app.use(logging);
 app.use('/login', authRouter);
