@@ -3,7 +3,7 @@ const passport = require('passport');
 const passportJwt = require('passport-jwt');
 const JWTStrategy = passportJwt.Strategy;
 const ExtractJWT = passportJwt.ExtractJwt;
-const secret = "claveSecretaQueSoloConoceElServer";
+const secret = process.env.SECRET_KEY || "defaultSecretKey";
 
 passport.use(new JWTStrategy({
   jwtFromRequest: ExtractJWT.fromAuthHeaderAsBearerToken(),

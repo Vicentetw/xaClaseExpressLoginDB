@@ -5,6 +5,7 @@ const { userRouter, authRouter, libraryRouter, bookRouter } = require('./routes'
 const { initializeDB } = require('./config/dbConfig');
 const { authMiddleware } = require('./middleware/authentication');
 const cors=require('cors');
+require('dotenv').config();
 
 const PORT = 8080;
 const app = express();
