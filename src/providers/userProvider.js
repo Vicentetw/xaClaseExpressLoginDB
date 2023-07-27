@@ -1,6 +1,7 @@
 const { Op } = require("sequelize");
 const { User } = require("../models");
-
+const bcrypt = require('bcrypt');
+/*
 const createUser = async (userOptions) => {
   try {
     const newUser = await User.create(userOptions);
@@ -11,6 +12,26 @@ const createUser = async (userOptions) => {
   }
 
 };
+*/
+
+//crear usuario utilizando bcrypt.hask para realizar hash de la contraseña y no guardarlo como texto plano
+const createUser = async (userOptions) => {
+  try {
+    // Hashear la contraseña antes de guardarla en la base de datos
+    const hashedPassword = await bcrypt.hash(userOptions.password, 10);
+    userOptions.password = hashedPassword;
+    
+
+    const newUser = await User.create(userOptions);
+    return newUser;
+  } catch (error) {
+    console.error("Error al crear usuario", error);
+    throw error;
+  }
+};
+//fin create user con hash
+
+
 
 const deleteUser = async (userId) => {
   try {
@@ -52,28 +73,8 @@ const updateUser = async (userId, updatedUser) => {
     throw error;
   }
 };
-/*
-const validateUser = async (email, password) => {
-  try {
-    const user = await User.findAll({
-      where: {
-        email: email,
-        password: password,
-      },
-    });
 
-    if (user.length !== 0) {
-      return user;
-    } else {
-      return false;
-    }
-  } catch (error) {
-    console.error("Error when validating User", error);
-    return false;
-  }
-};
-*/
-
+`/*
 const validateUser = async (nombre, password) => {
   try {
     const user = await User.findOne({
@@ -101,18 +102,22 @@ const validateUser = async (nombre, password) => {
     return false;
   }
 };
-
-/*
+*/`
 const validateUser = async (nombre, password) => {
   try {
-    const user = await User.findAll({
+    const user = await User.findOne({
       where: {
         nombre: nombre,
-        password: password,
+        //quité de aquí password verifico existencia de user y compara pass con hash
       },
     });
 
-    if (user.length !== 0) {
+    if (!user) {
+      return false;
+    }
+
+    const isPasswordValid = await bcrypt.compare(password, user.password);
+    if (isPasswordValid) {
       return user;
     } else {
       return false;
@@ -122,7 +127,6 @@ const validateUser = async (nombre, password) => {
     return false;
   }
 };
-*/
 module.exports = {
   createUser,
   deleteUser,
